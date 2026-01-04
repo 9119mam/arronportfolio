@@ -304,43 +304,6 @@
                 </div>
             </section>
         </main>
-        <script>
-// Image slideshow timer - CHANGE THE NUMBER BELOW TO ADJUST TIMING
-$(document).ready(function() {
-    const imageDuration = 99999999; // Change this: 3000 = 3 seconds, 5000 = 5 seconds, 10000 = 10 seconds
-    
-    setTimeout(function() {
-        setInterval(function() {
-            // Toggle blur images
-            $('.home-header_blur-img._1').css('opacity', function(i, val) {
-                return val === '1' ? '0' : '1';
-            });
-            $('.home-header_blur-img._2').css('opacity', function(i, val) {
-                return val === '1' ? '0' : '1';
-            });
-            
-            // Toggle sharp images with blur effect
-            $('.home-header_sharp-img._1').each(function() {
-                const currentOpacity = $(this).css('opacity');
-                if (parseFloat(currentOpacity) > 0.5) {
-                    $(this).css({'opacity': '0', 'filter': 'blur(30px)'});
-                } else {
-                    $(this).css({'opacity': '1', 'filter': 'blur(0px)'});
-                }
-            });
-            
-            $('.home-header_sharp-img._2').each(function() {
-                const currentOpacity = $(this).css('opacity');
-                if (parseFloat(currentOpacity) > 0.5) {
-                    $(this).css({'opacity': '0', 'filter': 'blur(30px)'});
-                } else {
-                    $(this).css({'opacity': '1', 'filter': 'blur(0px)'});
-                }
-            });
-        }, imageDuration);
-    }, 1000);
-});
-</script>
         
         <footer class="footer">
             <div class="padding-global">
@@ -384,6 +347,7 @@ $(document).ready(function() {
     <script src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/js/webflow.262753a9.dc64398d9726463c.js" type="text/javascript"></script>
 </body>
 </html>
+
 
 
 
