@@ -20,7 +20,9 @@
     <link href="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/css/focusly-template.webflow.shared.dc6b0d070.css" rel="stylesheet" type="text/css"/>
 
     <style>
-        /* 1. ANIMATION PRE-LOAD STATES */
+        /* --- 1. GENERAL TWEAKS --- */
+        
+        /* Animation Pre-load States */
         @media (min-width:992px) {
             html.w-mod-js:not(.w-mod-ix) [data-w-id="b54acf21-06a6-3000-01a4-555cd104c2f5"] {display:flex;}
             html.w-mod-js:not(.w-mod-ix) [data-w-id="b54acf21-06a6-3000-01a4-555cd104c2f7"] {width:0px;}
@@ -28,7 +30,7 @@
             html.w-mod-js:not(.w-mod-ix) [data-w-id="b54acf21-06a6-3000-01a4-555cd104c2f8"] {opacity:0;}
         }
         
-        /* 2. REMOVE WEBFLOW WATERMARK/BADGE */
+        /* Remove Webflow Badge */
         .w-webflow-badge, .w-webflow-badge * {
             display: none !important;
             visibility: hidden !important;
@@ -36,25 +38,120 @@
             pointer-events: none !important;
         }
 
-        /* 3. HIDE BUY BUTTON */
+        /* Hide Buy Button */
         .buy-template { display:none !important; }
 
-        /* 4. HIGH-END FONT RENDERING */
+        /* Smooth Fonts */
         * {
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* 5. IMAGE FIX FOR SELECTED WORK AREA - FULL RESOLUTION/NO CROPS */
-        #section-work .work-list_img {
+        /* --- 2. WORK GRID STYLING (Dynamic Layout & Rounded Borders) --- */
+
+        /* Grid Layout: 2 Columns base with tight gap */
+        #section-work .work-list_list, 
+        #section-drone .work-list_list {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important; /* 2 Equal Columns base */
+            gap: 15px !important; /* Professional, tight gap */
             width: 100% !important;
-            height: auto !important;
-            object-fit: contain !important;
-            max-height: none !important;
+            margin-top: 20px;
         }
-        #section-work .work-list_link, 
-        #section-work .work-list_block {
+
+        /* --- DYNAMIC POSTER SIZING LOGIC --- */
+        /* Make the FIRST item in Selected Work span full width (2 columns) */
+        #section-work .work-list_list .work-list_item:nth-child(1) {
+            grid-column: span 2 !important;
+        }
+        /* Make the FIRST item in Drone section span full width (2 columns) */
+        #section-drone .work-list_list .work-list_item:nth-child(1) {
+             grid-column: span 2 !important;
+        }
+
+        /* The Item Container */
+        #section-work .work-list_item,
+        #section-drone .work-list_item {
+            width: 100% !important;
+            max-width: none !important;
+            margin: 0 !important;
+        }
+
+        /* The Frame Container (Invisible Box holding the image) */
+        #section-work .work-list_block,
+        #section-drone .work-list_block {
+            width: 100% !important;
+            /* Standard height for normal items */
+            height: 850px !important; 
+            background-color: transparent !important;
+            border: none !important; 
+            position: relative;
+            overflow: visible; 
+            display: flex;
+            align-items: center; 
+            justify-content: center; 
+            padding: 5px; 
+        }
+
+        /* --- EXTRA HEIGHT FOR THE BIG POSTERS --- */
+        /* Make the container for the spanning items taller for more impact */
+        #section-work .work-list_list .work-list_item:nth-child(1) .work-list_block,
+        #section-drone .work-list_list .work-list_item:nth-child(1) .work-list_block {
+            height: 1000px !important;
+        }
+
+
+        /* The Image: ROUNDED BORDER & SHADOW */
+        #section-work .work-list_img,
+        #section-drone .work-list_img {
+            width: auto !important;
             height: auto !important;
+            max-width: 100% !important;
+            max-height: 100% !important;
+            
+            /* ROUNDED BORDERS APPLIED HERE */
+            border-radius: 16px !important;
+            border: 1px solid rgba(255, 255, 255, 0.4) !important;
+            
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.5s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Hover Effect */
+        #section-work .work-list_block:hover .work-list_img,
+        #section-drone .work-list_block:hover .work-list_img {
+            transform: scale(1.015);
+            border-color: rgba(255, 255, 255, 0.9) !important;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+        }
+
+        /* Hide text descriptions */
+        .work-meta, .work-list_name {
+            display: none !important;
+        }
+
+        /* --- 3. MOBILE RESPONSIVENESS --- */
+        @media (max-width: 991px) {
+            #section-work .work-list_list,
+            #section-drone .work-list_list {
+                grid-template-columns: 1fr !important; /* Stack everything to 1 column */
+                gap: 15px !important;
+            }
+            /* Reset spans on mobile so everything stacks normally */
+            #section-work .work-list_list .work-list_item:nth-child(1),
+            #section-drone .work-list_list .work-list_item:nth-child(1) {
+                grid-column: span 1 !important;
+            }
+
+            #section-work .work-list_block,
+            #section-drone .work-list_block {
+                height: 550px !important; /* Standard mobile height */
+            }
+             /* Reset extra height for posters on mobile */
+            #section-work .work-list_list .work-list_item:nth-child(1) .work-list_block,
+            #section-drone .work-list_list .work-list_item:nth-child(1) .work-list_block {
+                height: 550px !important;
+            }
         }
     </style>
 
@@ -149,7 +246,6 @@
                     <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"><div class="home-header_number-wrap"><div class="home-header_number">02</div></div></div></div>
                     <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"></div></div>
                     <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"></div></div>
-                    <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"></div></div>
                 </div>
                 <div class="home-header_button-wrap">
                     <a data-wf--button--variant="blur-light" data-w-id="51c04b08-f112-dc39-7386-06d942d86096" href="#section-about" class="button w-variant-98e14c59-56d4-7695-3c7a-22b65b5b56e7 w-inline-block">
@@ -164,14 +260,14 @@
                 <div class="padding-section-xsmall"></div>
                 <div class="padding-global">
                     <div class="home-about_component">
-                        <div data-w-id="96b031a7-329e-bc86-4330-4d66c631e1eb" style="-webkit-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="home-about_img-wrap">
-                            <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682cd86ee39d5e65847f084a_studio-eyes.webp" loading="lazy" data-w-id="c268429d-5f27-8605-81dd-e10ac8e8ae7d" sizes="(max-width: 2048px) 100vw, 2048px" alt="A man holding a camera in front of a white backdrop." class="home-about_img"/>
+                        <div data-w-id="96b031a7-329e-bc86-4330-4d66c631e1eb" class="home-about_img-wrap">
+                            <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682cd86ee39d5e65847f084a_studio-eyes.webp" loading="lazy" sizes="(max-width: 2048px) 100vw, 2048px" alt="A man holding a camera in front of a white backdrop." class="home-about_img"/>
                         </div>
                         <div id="w-node-_72f71948-e551-9af2-f277-8f9897357bb8-bdd80e47" class="content-wrapper tablet-margin">
-                            <h2 data-w-id="bdbcb679-efb0-e795-00a5-a7612668a72c" style="-webkit-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0">About <span class="text-style-italic">me</span></h2>
+                            <h2 data-w-id="bdbcb679-efb0-e795-00a5-a7612668a72c">About <span class="text-style-italic">me</span></h2>
                             <div class="content-wrap">
-                                <p data-w-id="0cb93a61-625e-2ea3-8463-c0b964a0352f" style="-webkit-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare.<br/><br/>Eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.</p>
-                                <div data-w-id="9ac55add-88d5-6349-fbf1-415893960740" style="-webkit-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="fade-in">
+                                <p data-w-id="0cb93a61-625e-2ea3-8463-c0b964a0352f">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare.<br/><br/>Eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.</p>
+                                <div data-w-id="9ac55add-88d5-6349-fbf1-415893960740" class="fade-in">
                                     <a data-wf--button--variant="white" data-w-id="51c04b08-f112-dc39-7386-06d942d86096" href="#section-about" class="button w-inline-block">
                                         <div class="button_texts"><div class="button_text _1">Read more</div><div class="button_text _2">Read more</div></div>
                                         <div class="button-line_space blue-dark-36"></div>
@@ -189,12 +285,12 @@
                 <div class="padding-section-xsmall"></div>
                 <div class="padding-global">
                     <div class="home-service_component">
-                        <div id="w-node-a6675218-e2ce-8eb5-13f6-2d3783e2c2e6-bdd80e47" data-w-id="a6675218-e2ce-8eb5-13f6-2d3783e2c2e6" style="-webkit-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="home-service_content">
+                        <div id="w-node-a6675218-e2ce-8eb5-13f6-2d3783e2c2e6-bdd80e47" data-w-id="a6675218-e2ce-8eb5-13f6-2d3783e2c2e6" class="home-service_content">
                             <div class="content-wrapper">
-                                <div class="text-color-white"><h2 data-w-id="b6c844c4-8a13-eb53-674d-16a8e52398a8" style="-webkit-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"><span class="text-style-italic">Portrait</span> &amp; Wedding</h2></div>
+                                <div class="text-color-white"><h2 data-w-id="b6c844c4-8a13-eb53-674d-16a8e52398a8"><span class="text-style-italic">Portrait</span> &amp; Wedding</h2></div>
                                 <div class="content-wrap">
-                                    <div class="text-color-white"><p data-w-id="b6c844c4-8a13-eb53-674d-16a8e52398ae" style="-webkit-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare.<br/><br/>Eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. </p></div>
-                                    <div data-w-id="c99965c9-f112-500b-416a-b8c5c0c6592d" style="-webkit-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="fade-in">
+                                    <div class="text-color-white"><p data-w-id="b6c844c4-8a13-eb53-674d-16a8e52398ae">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare.<br/><br/>Eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. </p></div>
+                                    <div data-w-id="c99965c9-f112-500b-416a-b8c5c0c6592d" class="fade-in">
                                         <a data-wf--button--variant="white" data-w-id="51c04b08-f112-dc39-7386-06d942d86096" href="#section-contact" class="button w-inline-block"><div class="button_texts"><div class="button_text _1">Learn more</div><div class="button_text _2">Learn more</div></div><div class="button-line_space blue-dark-36"></div><div class="button-line_dot blue-dark-37"><div class="button_dot"></div><div class="button_dot-scale"></div></div></a>
                                     </div>
                                 </div>
@@ -209,14 +305,14 @@
                 <div class="padding-section-xsmall"></div>
                 <div class="padding-global">
                     <div class="home-service_component photo-left">
-                        <div data-w-id="39186d55-16f1-ca92-3a97-a7ced626b408" style="-webkit-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="home-service_img-wrap">
-                            <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682e6f8f094993a2cd815de6_commercial-final.webp" loading="lazy" data-w-id="619b6c8e-87fa-7425-efa5-19bcea1d8e1e" sizes="(max-width: 2560px) 100vw, 2560px" alt="Two women sitting on the grass eating watermelon." class="home-service_img"/>
+                        <div data-w-id="39186d55-16f1-ca92-3a97-a7ced626b408" class="home-service_img-wrap">
+                            <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682e6f8f094993a2cd815de6_commercial-final.webp" loading="lazy" sizes="(max-width: 2560px) 100vw, 2560px" alt="Two women sitting on the grass eating watermelon." class="home-service_img"/>
                         </div>
                         <div id="w-node-_6d4cd2fc-bdd6-8c31-a648-d2b76bdbc748-bdd80e47" class="content-wrapper tablet-margin">
-                            <h2 data-w-id="6d4cd2fc-bdd6-8c31-a648-d2b76bdbc74a" style="-webkit-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"><span class="text-style-italic">Commercial</span> &amp; editorial</h2>
+                            <h2 data-w-id="6d4cd2fc-bdd6-8c31-a648-d2b76bdbc74a"><span class="text-style-italic">Commercial</span> &amp; editorial</h2>
                             <div class="content-wrap">
-                                <p data-w-id="6d4cd2fc-bdd6-8c31-a648-d2b76bdbc751" style="-webkit-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare.<br/><br/>Eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. </p>
-                                <div data-w-id="f7b5304c-bfbe-6652-8d6f-7eecedaace78" style="-webkit-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="fade-in">
+                                <p data-w-id="6d4cd2fc-bdd6-8c31-a648-d2b76bdbc751">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare.<br/><br/>Eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. </p>
+                                <div data-w-id="f7b5304c-bfbe-6652-8d6f-7eecedaace78" class="fade-in">
                                     <a data-wf--button--variant="white" data-w-id="51c04b08-f112-dc39-7386-06d942d86096" href="#section-contact" class="button w-inline-block"><div class="button_texts"><div class="button_text _1">Learn more</div><div class="button_text _2">Learn more</div></div><div class="button-line_space blue-dark-36"></div><div class="button-line_dot blue-dark-37"><div class="button_dot"></div><div class="button_dot-scale"></div></div></a>
                                 </div>
                             </div>
@@ -230,12 +326,12 @@
                 <div class="padding-section-xsmall"></div>
                 <div class="padding-global">
                     <div class="home-service_component">
-                        <div id="w-node-_30e4db02-c0a4-a0b6-5c18-7c1c84484b7a-bdd80e47" data-w-id="30e4db02-c0a4-a0b6-5c18-7c1c84484b7a" style="-webkit-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="home-service_content darker">
+                        <div id="w-node-_30e4db02-c0a4-a0b6-5c18-7c1c84484b7a-bdd80e47" data-w-id="30e4db02-c0a4-a0b6-5c18-7c1c84484b7a" class="home-service_content darker">
                             <div class="content-wrapper">
-                                <div class="text-color-white"><h2 data-w-id="30e4db02-c0a4-a0b6-5c18-7c1c84484b7d" style="-webkit-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0"><span class="text-style-italic">Fashion</span> Photoshoot</h2></div>
+                                <div class="text-color-white"><h2 data-w-id="30e4db02-c0a4-a0b6-5c18-7c1c84484b7d"><span class="text-style-italic">Fashion</span> Photoshoot</h2></div>
                                 <div class="content-wrap">
-                                    <div class="text-color-white"><p data-w-id="30e4db02-c0a4-a0b6-5c18-7c1c84484b84" style="-webkit-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare.<br/><br/>Eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. </p></div>
-                                    <div data-w-id="c6b8f727-bbce-09b2-59c0-e2e685f4ffab" style="-webkit-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="fade-in">
+                                    <div class="text-color-white"><p data-w-id="30e4db02-c0a4-a0b6-5c18-7c1c84484b84">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare.<br/><br/>Eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. </p></div>
+                                    <div data-w-id="c6b8f727-bbce-09b2-59c0-e2e685f4ffab" class="fade-in">
                                         <a data-wf--button--variant="white" data-w-id="51c04b08-f112-dc39-7386-06d942d86096" href="#section-contact" class="button w-inline-block"><div class="button_texts"><div class="button_text _1">Learn more</div><div class="button_text _2">Learn more</div></div><div class="button-line_space blue-dark-36"></div><div class="button-line_dot blue-dark-37"><div class="button_dot"></div><div class="button_dot-scale"></div></div></a>
                                     </div>
                                 </div>
@@ -251,38 +347,112 @@
                 <div class="padding-global">
                     <div class="work-list_component">
                         <div class="work-list_head">
-                            <h2 data-w-id="7dc38120-aa02-5ed2-ef22-bb6849ec52aa" style="-webkit-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="heading-style-h1"><span data-w-id="74647a67-d895-dddd-5181-d57c864adc51" style="-webkit-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="text-style-italic">Selected</span> <span data-w-id="43744f35-d2f6-ddaf-a5a8-91ab214336e1" style="-webkit-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0">work</span></h2>
-                            <div data-w-id="2e85e448-bb7e-c3b6-2ef3-b8e207b1566d" style="-webkit-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(null, 0.5rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="work-list_number"><div>3</div></div>
+                            <h2 class="heading-style-h1"><span class="text-style-italic">Selected</span> work</h2>
+                            <div class="work-list_number"><div>6</div></div>
                         </div>
                         <div class="spacer-xlarge"></div>
-                        <div data-w-id="b54acf21-06a6-3000-01a4-555cd104c2f5" class="hover_wrap">
-                            <div data-w-id="b54acf21-06a6-3000-01a4-555cd104c2f6" class="hover_pill">
-                                <div data-w-id="b54acf21-06a6-3000-01a4-555cd104c2f7" class="hover_text-wrap"><div data-w-id="b54acf21-06a6-3000-01a4-555cd104c2f8" class="hover_text">View work</div></div>
-                            </div>
-                        </div>
+                        
                         <div class="work-list_wrapper w-dyn-list">
                             <div role="list" class="work-list_list w-dyn-items">
                                 <div role="listitem" class="work-list_item w-dyn-item">
-                                    <div data-w-id="07d0612c-d2c3-5c62-a1ed-b659ca677e7a" class="work-list_block">
-                                        <a aria-label="link to work page" data-w-id="c3aa485f-cc12-d93a-d282-f27efdbfbca1" href="#section-work" class="work-list_link w-inline-block">
+                                    <div class="work-list_block">
+                                        <a href="#section-work" class="work-list_link w-inline-block">
                                             <img src="https://cdn.prod.website-files.com/682ce02e04a40f0fec89ebb7/682d12a7eb54c99446a02775_man-1-final.webp" loading="eager" alt="" class="work-list_img"/>
-                                            <div class="work-list_name"><div class="dot"></div><div>Bronx</div></div>
                                         </a>
                                     </div>
                                 </div>
                                 <div role="listitem" class="work-list_item w-dyn-item">
-                                    <div data-w-id="07d0612c-d2c3-5c62-a1ed-b659ca677e7a" class="work-list_block">
-                                        <a aria-label="link to work page" data-w-id="c3aa485f-cc12-d93a-d282-f27efdbfbca1" href="#section-work" class="work-list_link w-inline-block">
+                                    <div class="work-list_block">
+                                        <a href="#section-work" class="work-list_link w-inline-block">
                                             <img src="https://cdn.prod.website-files.com/682ce02e04a40f0fec89ebb7/682d216e96bfe0471eba4e11_woman-final.webp" loading="eager" alt="" class="work-list_img"/>
-                                            <div class="work-list_name"><div class="dot"></div><div>Movve</div></div>
                                         </a>
                                     </div>
                                 </div>
                                 <div role="listitem" class="work-list_item w-dyn-item">
-                                    <div data-w-id="07d0612c-d2c3-5c62-a1ed-b659ca677e7a" class="work-list_block">
-                                        <a aria-label="link to work page" data-w-id="c3aa485f-cc12-d93a-d282-f27efdbfbca1" href="#section-work" class="work-list_link w-inline-block">
+                                    <div class="work-list_block">
+                                        <a href="#section-work" class="work-list_link w-inline-block">
                                             <img src="https://cdn.prod.website-files.com/682ce02e04a40f0fec89ebb7/682ce1a51a3a520ccb35431f_Three%20Men%20Outdoors.webp" loading="eager" alt="" class="work-list_img"/>
-                                            <div class="work-list_name"><div class="dot"></div><div>Minimalista</div></div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div role="listitem" class="work-list_item w-dyn-item">
+                                    <div class="work-list_block">
+                                        <a href="#section-work" class="work-list_link w-inline-block">
+                                            <img src="https://cdn.prod.website-files.com/682ce02e04a40f0fec89ebb7/682d12a7eb54c99446a02775_man-1-final.webp" loading="eager" alt="" class="work-list_img"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div role="listitem" class="work-list_item w-dyn-item">
+                                    <div class="work-list_block">
+                                        <a href="#section-work" class="work-list_link w-inline-block">
+                                            <img src="https://cdn.prod.website-files.com/682ce02e04a40f0fec89ebb7/682d216e96bfe0471eba4e11_woman-final.webp" loading="eager" alt="" class="work-list_img"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div role="listitem" class="work-list_item w-dyn-item">
+                                    <div class="work-list_block">
+                                        <a href="#section-work" class="work-list_link w-inline-block">
+                                            <img src="https://cdn.prod.website-files.com/682ce02e04a40f0fec89ebb7/682ce1a51a3a520ccb35431f_Three%20Men%20Outdoors.webp" loading="eager" alt="" class="work-list_img"/>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="section-drone" class="section_work-list">
+                <div class="padding-section-large"></div>
+                <div class="padding-global">
+                    <div class="work-list_component">
+                        <div class="work-list_head">
+                            <h2 class="heading-style-h1"><span class="text-style-italic">Drone</span> Photography</h2>
+                            <div class="work-list_number"><div>6</div></div>
+                        </div>
+                        <div class="spacer-xlarge"></div>
+                        
+                        <div class="work-list_wrapper w-dyn-list">
+                            <div role="list" class="work-list_list w-dyn-items">
+                                <div role="listitem" class="work-list_item w-dyn-item">
+                                    <div class="work-list_block">
+                                        <a href="#section-drone" class="work-list_link w-inline-block">
+                                            <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682cdb77ae160614a3059a2c_ezra-final.webp" loading="lazy" alt="" class="work-list_img"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div role="listitem" class="work-list_item w-dyn-item">
+                                    <div class="work-list_block">
+                                        <a href="#section-drone" class="work-list_link w-inline-block">
+                                            <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682e42f70b4bfc926ba6af18_ezra-2-final.webp" loading="lazy" alt="" class="work-list_img"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div role="listitem" class="work-list_item w-dyn-item">
+                                    <div class="work-list_block">
+                                        <a href="#section-drone" class="work-list_link w-inline-block">
+                                            <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682e6f8f094993a2cd815de6_commercial-final.webp" loading="lazy" alt="" class="work-list_img"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div role="listitem" class="work-list_item w-dyn-item">
+                                    <div class="work-list_block">
+                                        <a href="#section-drone" class="work-list_link w-inline-block">
+                                            <img src="https://cdn.prod.website-files.com/682ce02e04a40f0fec89ebb7/682ce1a51a3a520ccb35431f_Three%20Men%20Outdoors.webp" loading="lazy" alt="" class="work-list_img"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div role="listitem" class="work-list_item w-dyn-item">
+                                    <div class="work-list_block">
+                                        <a href="#section-drone" class="work-list_link w-inline-block">
+                                            <img src="https://cdn.prod.website-files.com/682ce02e04a40f0fec89ebb7/682d12a7eb54c99446a02775_man-1-final.webp" loading="lazy" alt="" class="work-list_img"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div role="listitem" class="work-list_item w-dyn-item">
+                                    <div class="work-list_block">
+                                        <a href="#section-drone" class="work-list_link w-inline-block">
+                                            <img src="https://cdn.prod.website-files.com/682ce02e04a40f0fec89ebb7/682d216e96bfe0471eba4e11_woman-final.webp" loading="lazy" alt="" class="work-list_img"/>
                                         </a>
                                     </div>
                                 </div>
