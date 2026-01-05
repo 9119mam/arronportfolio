@@ -45,11 +45,19 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* --- CUSTOM FIX: STOP IMAGE SWAPPING --- */
-        /* This forces the first image to stay visible forever */
-        .home-header_blur-img._1, 
-        .home-header_sharp-img._1 {
+        /* --- FIX: FORCE IMAGES TO STAY PUT --- */
+        /* This ensures the images don't disappear if the JS tries to hide them */
+        .home-header_blur-img, 
+        .home-header_sharp-img {
             opacity: 1 !important;
+            display: block !important;
+            /* Ensure layout remains correct even with '_1' class removed */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     </style>
 
@@ -112,10 +120,11 @@
         <main class="main-wrapper">
             <section data-w-id="a5d0197b-4bad-3d7b-35c5-035e655f7008" class="section_home-header">
                 <div class="home-header_blur-images">
-                    <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682cdb77ae160614a3059a2c_ezra-final.webp" loading="eager" style="opacity:1" alt="A man standing in front of a blue sky." class="home-header_blur-img _1"/>
-                    </div>
+                    <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682cdb77ae160614a3059a2c_ezra-final.webp" loading="eager" style="opacity:1" alt="A man standing in front of a blue sky." class="home-header_blur-img"/>
+                </div>
                 <div class="home-header_sharp-imgs">
-                    <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682cdb77ae160614a3059a2c_ezra-final.webp" loading="eager" style="filter:blur(0px);opacity:1" alt="A man standing in front of a blue sky." class="home-header_sharp-img _1"/>
+                    <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682cdb77ae160614a3059a2c_ezra-final.webp" loading="eager" style="filter:blur(0px);opacity:1" alt="A man standing in front of a blue sky." class="home-header_sharp-img"/>
+                    
                     <div class="home-header_frame">
                         <div class="header-frame_center">
                             <div class="header-frame_lines"><div class="header-frame_line"></div><div class="header-frame_line vertical"></div></div>
@@ -139,7 +148,6 @@
                     <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"></div></div>
                     <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"><div class="home-header_number-wrap"><div class="home-header_number">01</div></div></div></div>
                     <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"></div></div>
-                    <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"><div class="home-header_number-wrap"><div class="home-header_number">02</div></div></div></div>
                     <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"></div></div>
                     <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"></div></div>
                     <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"></div></div>
