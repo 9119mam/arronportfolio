@@ -18,23 +18,30 @@
     <link href="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/css/focusly-template.webflow.shared.dc6b0d070.css" rel="stylesheet" type="text/css"/>
 
     <style>
-        /* --- FIXES START HERE --- */
+        /* --- ANIMATION OVERRIDES --- */
 
-        /* 1. LOCK IMAGES (Disable Swapping, Keep Movement) */
-        /* This forces Image 1 to always be visible, ignoring the JS timer */
-        .home-header_blur-img._1, 
-        .home-header_sharp-img._1 {
+        /* 1. LOCK IMAGE 1 (The one you want to keep) */
+        /* Forces it to stay opaque and prevents the blur effect */
+        img.home-header_sharp-img._1 {
             opacity: 1 !important;
+            filter: blur(0px) !important; /* Critical: Stops the blur animation */
+            visibility: visible !important;
+        }
+        img.home-header_blur-img._1 {
+            opacity: 1 !important;
+            visibility: visible !important;
         }
 
-        /* This forces Image 2 to always be invisible, ignoring the JS timer */
-        .home-header_blur-img._2, 
-        .home-header_sharp-img._2 {
+        /* 2. HIDE IMAGE 2 (The one you want to remove) */
+        /* Forces it to stay invisible regardless of what the script does */
+        img.home-header_sharp-img._2,
+        img.home-header_blur-img._2 {
             opacity: 0 !important;
             visibility: hidden !important;
+            display: none !important;
         }
 
-        /* 2. ANIMATION PRE-LOAD STATES */
+        /* 3. ANIMATION PRE-LOAD STATES */
         @media (min-width:992px) {
             html.w-mod-js:not(.w-mod-ix) [data-w-id="b54acf21-06a6-3000-01a4-555cd104c2f5"] {display:flex;}
             html.w-mod-js:not(.w-mod-ix) [data-w-id="b54acf21-06a6-3000-01a4-555cd104c2f7"] {width:0px;}
@@ -42,7 +49,7 @@
             html.w-mod-js:not(.w-mod-ix) [data-w-id="b54acf21-06a6-3000-01a4-555cd104c2f8"] {opacity:0;}
         }
         
-        /* 3. REMOVE WEBFLOW WATERMARK/BADGE */
+        /* 4. REMOVE WEBFLOW WATERMARK/BADGE */
         .w-webflow-badge, .w-webflow-badge * {
             display: none !important;
             visibility: hidden !important;
@@ -50,10 +57,10 @@
             pointer-events: none !important;
         }
 
-        /* 4. HIDE BUY BUTTON */
+        /* 5. HIDE BUY BUTTON */
         .buy-template { display:none !important; }
 
-        /* 5. HIGH-END FONT RENDERING */
+        /* 6. HIGH-END FONT RENDERING */
         * {
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -119,12 +126,12 @@
         <main class="main-wrapper">
             <section data-w-id="a5d0197b-4bad-3d7b-35c5-035e655f7008" class="section_home-header">
                 <div class="home-header_blur-images">
-                    <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682cdb77ae160614a3059a2c_ezra-final.webp" loading="eager" style="opacity:1" alt="A man standing in front of a blue sky." class="home-header_blur-img _1"/>
-                    <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682e42f70b4bfc926ba6af18_ezra-2-final.webp" loading="eager" style="opacity:0" alt="A man standing in a field holding a camera." class="home-header_blur-img _2"/>
+                    <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682cdb77ae160614a3059a2c_ezra-final.webp" loading="eager" alt="A man standing in front of a blue sky." class="home-header_blur-img _1"/>
+                    <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682e42f70b4bfc926ba6af18_ezra-2-final.webp" loading="eager" alt="A man standing in a field holding a camera." class="home-header_blur-img _2"/>
                 </div>
                 <div class="home-header_sharp-imgs">
-                    <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682cdb77ae160614a3059a2c_ezra-final.webp" loading="eager" style="filter:blur(0px);opacity:1" alt="A man standing in front of a blue sky." class="home-header_sharp-img _1"/>
-                    <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682e42f70b4bfc926ba6af18_ezra-2-final.webp" loading="eager" style="filter:blur(30px);opacity:0" alt="A man standing in a field holding a camera." class="home-header_sharp-img _2"/>
+                    <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682cdb77ae160614a3059a2c_ezra-final.webp" loading="eager" alt="A man standing in front of a blue sky." class="home-header_sharp-img _1"/>
+                    <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682e42f70b4bfc926ba6af18_ezra-2-final.webp" loading="eager" alt="A man standing in a field holding a camera." class="home-header_sharp-img _2"/>
                     <div class="home-header_frame">
                         <div class="header-frame_center">
                             <div class="header-frame_lines"><div class="header-frame_line"></div><div class="header-frame_line vertical"></div></div>
