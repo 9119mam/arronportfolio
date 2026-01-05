@@ -49,12 +49,12 @@
 
         /* --- 2. WORK GRID STYLING (Applies to both Selected Work & Drone) --- */
 
-        /* Grid Layout: 2 Columns with SMALLER GAP */
+        /* Grid Layout: 2 Columns with TIGHT GAP */
         #section-work .work-list_list, 
         #section-drone .work-list_list {
             display: grid !important;
             grid-template-columns: 1fr 1fr !important; /* 2 Equal Columns */
-            gap: 20px !important; /* Reduced gap size */
+            gap: 10px !important; /* Very small gap */
             width: 100% !important;
             margin-top: 20px;
         }
@@ -67,13 +67,13 @@
             margin: 0 !important;
         }
 
-        /* The Frame: "Poster" size with BORDERS ON ALL */
+        /* The Frame: BIGGER "Poster" size with BORDERS */
         #section-work .work-list_block,
         #section-drone .work-list_block {
             width: 100% !important;
-            height: 1350px !important; /* Tall "Poster" height */
+            height: 850px !important; /* Increased height for bigger impact */
             background-color: transparent !important;
-            border: 15px solid rgba(255, 255, 255, 0.3) !important; /* Visible border on every item */
+            border: 1px solid rgba(255, 255, 255, 0.3) !important; /* Visible border on every item */
             position: relative;
             overflow: hidden;
             display: flex;
@@ -88,13 +88,18 @@
             height: 100% !important;
             object-fit: contain !important; /* Entire image visible */
             object-position: center !important;
-            transition: transform 1s ease;
+            transition: transform 0.5s ease;
         }
 
         /* Hover Effect */
         #section-work .work-list_block:hover .work-list_img,
         #section-drone .work-list_block:hover .work-list_img {
             transform: scale(1.02);
+        }
+
+        /* Hide the text descriptions as requested */
+        .work-list_name {
+            display: none !important;
         }
 
         /* --- 3. MOBILE RESPONSIVENESS --- */
@@ -106,7 +111,7 @@
             }
             #section-work .work-list_block,
             #section-drone .work-list_block {
-                height: 500px !important; /* Smaller on mobile */
+                height: 550px !important; /* Smaller on mobile but still tall */
             }
         }
     </style>
@@ -170,11 +175,11 @@
         <main class="main-wrapper">
             <section data-w-id="a5d0197b-4bad-3d7b-35c5-035e655f7008" class="section_home-header">
                 <div class="home-header_blur-images">
-                    <img src="https://github.com/9119mam/arronportfolio/blob/main/processed-E4B3E5FF-1927-44FD-85F9-586FD109F76E.jpeg" loading="eager" style="opacity:1" alt="A man standing in front of a blue sky." class="home-header_blur-img _1"/>
+                    <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682cdb77ae160614a3059a2c_ezra-final.webp" loading="eager" style="opacity:1" alt="A man standing in front of a blue sky." class="home-header_blur-img _1"/>
                     <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682e42f70b4bfc926ba6af18_ezra-2-final.webp" loading="eager" style="opacity:0" alt="A man standing in a field holding a camera." class="home-header_blur-img _2"/>
                 </div>
                 <div class="home-header_sharp-imgs">
-                    <img src="https://github.com/9119mam/arronportfolio/blob/main/processed-E4B3E5FF-1927-44FD-85F9-586FD109F76E.jpeg?raw=true" loading="eager" style="filter:blur(0px);opacity:1" alt="A man standing in front of a blue sky." class="home-header_sharp-img _1"/>
+                    <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682cdb77ae160614a3059a2c_ezra-final.webp" loading="eager" style="filter:blur(0px);opacity:1" alt="A man standing in front of a blue sky." class="home-header_sharp-img _1"/>
                     <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682e42f70b4bfc926ba6af18_ezra-2-final.webp" loading="eager" style="filter:blur(30px);opacity:0" alt="A man standing in a field holding a camera." class="home-header_sharp-img _2"/>
                     <div class="home-header_frame">
                         <div class="header-frame_center">
@@ -314,42 +319,42 @@
                                 <div role="listitem" class="work-list_item w-dyn-item">
                                     <div class="work-list_block">
                                         <a href="#section-work" class="work-list_link w-inline-block">
-                                            <img src="https://github.com/9119mam/arronportfolio/blob/main/Imagination.PNG?raw=true" loading="eager" alt="" class="work-list_img"/>
+                                            <img src="https://cdn.prod.website-files.com/682ce02e04a40f0fec89ebb7/682d12a7eb54c99446a02775_man-1-final.webp" loading="eager" alt="" class="work-list_img"/>
                                         </a>
                                     </div>
                                 </div>
                                 <div role="listitem" class="work-list_item w-dyn-item">
                                     <div class="work-list_block">
                                         <a href="#section-work" class="work-list_link w-inline-block">
-                                            <img src="https://github.com/9119mam/arronportfolio/blob/main/Peace.jpg?raw=true" loading="eager" alt="" class="work-list_img"/>
+                                            <img src="https://cdn.prod.website-files.com/682ce02e04a40f0fec89ebb7/682d216e96bfe0471eba4e11_woman-final.webp" loading="eager" alt="" class="work-list_img"/>
                                         </a>
                                     </div>
                                 </div>
                                 <div role="listitem" class="work-list_item w-dyn-item">
                                     <div class="work-list_block">
                                         <a href="#section-work" class="work-list_link w-inline-block">
-                                            <img src="https://github.com/9119mam/arronportfolio/blob/main/Nike%20Vintage.jpg?raw=true" loading="eager" alt="" class="work-list_img"/>
+                                            <img src="https://cdn.prod.website-files.com/682ce02e04a40f0fec89ebb7/682ce1a51a3a520ccb35431f_Three%20Men%20Outdoors.webp" loading="eager" alt="" class="work-list_img"/>
                                         </a>
                                     </div>
                                 </div>
                                 <div role="listitem" class="work-list_item w-dyn-item">
                                     <div class="work-list_block">
                                         <a href="#section-work" class="work-list_link w-inline-block">
-                                            <img src="https://github.com/9119mam/arronportfolio/blob/main/thesky%20is%20the%20limt.jpg?raw=true" loading="eager" alt="" class="work-list_img"/>
+                                            <img src="https://cdn.prod.website-files.com/682ce02e04a40f0fec89ebb7/682d12a7eb54c99446a02775_man-1-final.webp" loading="eager" alt="" class="work-list_img"/>
                                         </a>
                                     </div>
                                 </div>
                                 <div role="listitem" class="work-list_item w-dyn-item">
                                     <div class="work-list_block">
                                         <a href="#section-work" class="work-list_link w-inline-block">
-                                            <img src="https://github.com/9119mam/arronportfolio/blob/main/BMW7X.jpg?raw=true" loading="eager" alt="" class="work-list_img"/>
+                                            <img src="https://cdn.prod.website-files.com/682ce02e04a40f0fec89ebb7/682d216e96bfe0471eba4e11_woman-final.webp" loading="eager" alt="" class="work-list_img"/>
                                         </a>
                                     </div>
                                 </div>
                                 <div role="listitem" class="work-list_item w-dyn-item">
                                     <div class="work-list_block">
                                         <a href="#section-work" class="work-list_link w-inline-block">
-                                            <img src="https://github.com/9119mam/arronportfolio/blob/main/Chaseandstatus%20poster.png?raw=true" loading="eager" alt="" class="work-list_img"/>
+                                            <img src="https://cdn.prod.website-files.com/682ce02e04a40f0fec89ebb7/682ce1a51a3a520ccb35431f_Three%20Men%20Outdoors.webp" loading="eager" alt="" class="work-list_img"/>
                                         </a>
                                     </div>
                                 </div>
@@ -484,8 +489,3 @@
     <script src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/js/webflow.262753a9.dc64398d9726463c.js" type="text/javascript"></script>
 </body>
 </html>
-
-
-
-
-
