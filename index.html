@@ -49,12 +49,12 @@
 
         /* --- 2. WORK GRID STYLING (Applies to both Selected Work & Drone) --- */
 
-        /* Grid Layout: 2 Columns with gap */
+        /* Grid Layout: 2 Columns with SMALLER GAP */
         #section-work .work-list_list, 
         #section-drone .work-list_list {
             display: grid !important;
             grid-template-columns: 1fr 1fr !important; /* 2 Equal Columns */
-            gap: 60px 40px !important; /* 60px vertical gap, 40px horizontal gap */
+            gap: 20px !important; /* Reduced gap size */
             width: 100% !important;
             margin-top: 20px;
         }
@@ -67,19 +67,18 @@
             margin: 0 !important;
         }
 
-        /* The Frame: "Poster" size */
+        /* The Frame: "Poster" size with BORDERS ON ALL */
         #section-work .work-list_block,
         #section-drone .work-list_block {
             width: 100% !important;
             height: 750px !important; /* Tall "Poster" height */
-            background-color: transparent !important; /* Transparent background */
-            border: 1px solid rgba(255,255,255,0.1); /* Subtle border */
+            background-color: transparent !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important; /* Visible border on every item */
             position: relative;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 20px; /* Space between image and text */
         }
 
         /* The Image: Full Resolution, No Cropping */
@@ -98,42 +97,12 @@
             transform: scale(1.02);
         }
 
-        /* --- 3. TEXT STYLING (Title & Explanation) --- */
-        
-        .work-meta {
-            text-align: left;
-            padding-left: 5px;
-        }
-
-        .work-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .work-title .dot {
-            width: 8px;
-            height: 8px;
-            background-color: currentColor;
-            border-radius: 50%;
-        }
-
-        .work-description {
-            font-size: 1rem;
-            color: rgba(255,255,255,0.7); /* Lighter text color */
-            line-height: 1.4;
-            max-width: 90%;
-        }
-
-        /* --- 4. MOBILE RESPONSIVENESS --- */
+        /* --- 3. MOBILE RESPONSIVENESS --- */
         @media (max-width: 991px) {
             #section-work .work-list_list,
             #section-drone .work-list_list {
                 grid-template-columns: 1fr !important; /* Stack to 1 column */
-                gap: 40px !important;
+                gap: 20px !important;
             }
             #section-work .work-list_block,
             #section-drone .work-list_block {
@@ -201,7 +170,7 @@
         <main class="main-wrapper">
             <section data-w-id="a5d0197b-4bad-3d7b-35c5-035e655f7008" class="section_home-header">
                 <div class="home-header_blur-images">
-                    <img src="https://github.com/9119mam/arronportfolio/blob/main/MASONTEST.png?raw=true" loading="eager" style="opacity:1" alt="A man standing in front of a blue sky." class="home-header_blur-img _1"/>
+                    <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682cdb77ae160614a3059a2c_ezra-final.webp" loading="eager" style="opacity:1" alt="A man standing in front of a blue sky." class="home-header_blur-img _1"/>
                     <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682e42f70b4bfc926ba6af18_ezra-2-final.webp" loading="eager" style="opacity:0" alt="A man standing in a field holding a camera." class="home-header_blur-img _2"/>
                 </div>
                 <div class="home-header_sharp-imgs">
@@ -226,6 +195,13 @@
                 
                 <div class="home-header_squares"><div class="home-header_square"></div><div class="home-header_square _2"></div><div class="home-header_square _3"></div><div class="home-header_square _4"></div></div>
                 <div class="home-header_lines">
+                    <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"></div></div>
+                    <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"></div></div>
+                    <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"><div class="home-header_number-wrap"><div class="home-header_number">01</div></div></div></div>
+                    <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"></div></div>
+                    <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"><div class="home-header_number-wrap"><div class="home-header_number">02</div></div></div></div>
+                    <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"></div></div>
+                    <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"></div></div>
                     <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"></div></div>
                 </div>
                 <div class="home-header_button-wrap">
@@ -341,10 +317,6 @@
                                             <img src="https://cdn.prod.website-files.com/682ce02e04a40f0fec89ebb7/682d12a7eb54c99446a02775_man-1-final.webp" loading="eager" alt="" class="work-list_img"/>
                                         </a>
                                     </div>
-                                    <div class="work-meta">
-                                        <div class="work-title"><div class="dot"></div>Bronx</div>
-                                        <p class="work-description">Urban portraiture in soft natural light capturing the essence of the city streets.</p>
-                                    </div>
                                 </div>
                                 <div role="listitem" class="work-list_item w-dyn-item">
                                     <div class="work-list_block">
@@ -352,20 +324,12 @@
                                             <img src="https://cdn.prod.website-files.com/682ce02e04a40f0fec89ebb7/682d216e96bfe0471eba4e11_woman-final.webp" loading="eager" alt="" class="work-list_img"/>
                                         </a>
                                     </div>
-                                    <div class="work-meta">
-                                        <div class="work-title"><div class="dot"></div>Movve</div>
-                                        <p class="work-description">Dynamic motion capture in studio, focusing on the fluidity of movement and fabric.</p>
-                                    </div>
                                 </div>
                                 <div role="listitem" class="work-list_item w-dyn-item">
                                     <div class="work-list_block">
                                         <a href="#section-work" class="work-list_link w-inline-block">
                                             <img src="https://cdn.prod.website-files.com/682ce02e04a40f0fec89ebb7/682ce1a51a3a520ccb35431f_Three%20Men%20Outdoors.webp" loading="eager" alt="" class="work-list_img"/>
                                         </a>
-                                    </div>
-                                    <div class="work-meta">
-                                        <div class="work-title"><div class="dot"></div>Minimalista</div>
-                                        <p class="work-description">High contrast outdoor fashion editorial exploring shapes and shadows in nature.</p>
                                     </div>
                                 </div>
                                 <div role="listitem" class="work-list_item w-dyn-item">
@@ -374,10 +338,6 @@
                                             <img src="https://cdn.prod.website-files.com/682ce02e04a40f0fec89ebb7/682d12a7eb54c99446a02775_man-1-final.webp" loading="eager" alt="" class="work-list_img"/>
                                         </a>
                                     </div>
-                                    <div class="work-meta">
-                                        <div class="work-title"><div class="dot"></div>City Lights</div>
-                                        <p class="work-description">Nighttime urban exploration focusing on neon lights and atmospheric depth.</p>
-                                    </div>
                                 </div>
                                 <div role="listitem" class="work-list_item w-dyn-item">
                                     <div class="work-list_block">
@@ -385,20 +345,12 @@
                                             <img src="https://cdn.prod.website-files.com/682ce02e04a40f0fec89ebb7/682d216e96bfe0471eba4e11_woman-final.webp" loading="eager" alt="" class="work-list_img"/>
                                         </a>
                                     </div>
-                                    <div class="work-meta">
-                                        <div class="work-title"><div class="dot"></div>Studio Zen</div>
-                                        <p class="work-description">Minimalist interior concepts blending human forms with architectural rigidity.</p>
-                                    </div>
                                 </div>
                                 <div role="listitem" class="work-list_item w-dyn-item">
                                     <div class="work-list_block">
                                         <a href="#section-work" class="work-list_link w-inline-block">
                                             <img src="https://cdn.prod.website-files.com/682ce02e04a40f0fec89ebb7/682ce1a51a3a520ccb35431f_Three%20Men%20Outdoors.webp" loading="eager" alt="" class="work-list_img"/>
                                         </a>
-                                    </div>
-                                    <div class="work-meta">
-                                        <div class="work-title"><div class="dot"></div>Azure</div>
-                                        <p class="work-description">Coastal editorial shoot featuring vibrant blues and sharp sunlight contrasts.</p>
                                     </div>
                                 </div>
                             </div>
@@ -425,20 +377,12 @@
                                             <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682cdb77ae160614a3059a2c_ezra-final.webp" loading="lazy" alt="" class="work-list_img"/>
                                         </a>
                                     </div>
-                                    <div class="work-meta">
-                                        <div class="work-title"><div class="dot"></div>Coastline</div>
-                                        <p class="work-description">High altitude view of the crashing waves against the rocky shore.</p>
-                                    </div>
                                 </div>
                                 <div role="listitem" class="work-list_item w-dyn-item">
                                     <div class="work-list_block">
                                         <a href="#section-drone" class="work-list_link w-inline-block">
                                             <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682e42f70b4bfc926ba6af18_ezra-2-final.webp" loading="lazy" alt="" class="work-list_img"/>
                                         </a>
-                                    </div>
-                                    <div class="work-meta">
-                                        <div class="work-title"><div class="dot"></div>Mountain Pass</div>
-                                        <p class="work-description">Winding roads cutting through the deep green valleys seen from above.</p>
                                     </div>
                                 </div>
                                 <div role="listitem" class="work-list_item w-dyn-item">
@@ -447,20 +391,12 @@
                                             <img src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/682e6f8f094993a2cd815de6_commercial-final.webp" loading="lazy" alt="" class="work-list_img"/>
                                         </a>
                                     </div>
-                                    <div class="work-meta">
-                                        <div class="work-title"><div class="dot"></div>City Grid</div>
-                                        <p class="work-description">Urban density and architectural geometry captured from 400ft.</p>
-                                    </div>
                                 </div>
                                 <div role="listitem" class="work-list_item w-dyn-item">
                                     <div class="work-list_block">
                                         <a href="#section-drone" class="work-list_link w-inline-block">
                                             <img src="https://cdn.prod.website-files.com/682ce02e04a40f0fec89ebb7/682ce1a51a3a520ccb35431f_Three%20Men%20Outdoors.webp" loading="lazy" alt="" class="work-list_img"/>
                                         </a>
-                                    </div>
-                                    <div class="work-meta">
-                                        <div class="work-title"><div class="dot"></div>Forest Canopy</div>
-                                        <p class="work-description">A bird's eye view of the changing autumn colors in the dense forest.</p>
                                     </div>
                                 </div>
                                 <div role="listitem" class="work-list_item w-dyn-item">
@@ -469,20 +405,12 @@
                                             <img src="https://cdn.prod.website-files.com/682ce02e04a40f0fec89ebb7/682d12a7eb54c99446a02775_man-1-final.webp" loading="lazy" alt="" class="work-list_img"/>
                                         </a>
                                     </div>
-                                    <div class="work-meta">
-                                        <div class="work-title"><div class="dot"></div>Desert Dunes</div>
-                                        <p class="work-description">Abstract shadows cast by the setting sun over vast sand dunes.</p>
-                                    </div>
                                 </div>
                                 <div role="listitem" class="work-list_item w-dyn-item">
                                     <div class="work-list_block">
                                         <a href="#section-drone" class="work-list_link w-inline-block">
                                             <img src="https://cdn.prod.website-files.com/682ce02e04a40f0fec89ebb7/682d216e96bfe0471eba4e11_woman-final.webp" loading="lazy" alt="" class="work-list_img"/>
                                         </a>
-                                    </div>
-                                    <div class="work-meta">
-                                        <div class="work-title"><div class="dot"></div>Island Life</div>
-                                        <p class="work-description">Crystal clear tropical waters and coral reefs from an aerial perspective.</p>
                                     </div>
                                 </div>
                             </div>
@@ -556,4 +484,3 @@
     <script src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/js/webflow.262753a9.dc64398d9726463c.js" type="text/javascript"></script>
 </body>
 </html>
-
