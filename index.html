@@ -45,30 +45,56 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* 5. SELECTED WORK - UNIFORM SIZE & CONTAINED */
-        /* Constrain the width of the container to make it "smaller" */
-        #section-work .work-list_item {
-            max-width: 400px !important;
-            margin: 0 auto 40px auto; /* Centers the item and adds space below */
-        }
-
-        /* Create a fixed-height frame so all boxes are exactly the same size */
-        #section-work .work-list_block {
-            height: 450px !important; /* Fixed height for uniformity */
+        /* 5. SELECTED WORK - 2 COLUMNS, GAP, BIGGER IMAGES */
+        
+        /* Grid Container setup */
+        #section-work .work-list_list {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important; /* Creates 2 equal columns */
+            gap: 40px !important; /* Adds the gap between columns */
             width: 100% !important;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        /* Force image to fit INSIDE the frame without cropping */
+        /* Allow items to fill the column width */
+        #section-work .work-list_item {
+            max-width: none !important; 
+            width: 100% !important;
+            margin: 0 !important;
+        }
+
+        /* The Frame - Increased height significantly for "Bigger" poster look */
+        #section-work .work-list_block {
+            width: 100% !important;
+            height: 750px !important; /* Big poster height */
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* The Link/Wrapper */
+        #section-work .work-list_link {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* The Image - Fill the large frame */
         #section-work .work-list_img {
             width: 100% !important;
             height: 100% !important;
-            
-            /* 'contain' ensures the whole photo is seen (no crops) 
-               but it stays strictly within the 450px frame defined above */
-            object-fit: contain !important; 
+            /* 'cover' fills the grid cell completely (poster style). 
+               If you prefer no cropping at all (but with potential whitespace), change this to 'contain' */
+            object-fit: cover !important; 
+            object-position: center !important;
+        }
+
+        /* Mobile Response: Stack to 1 column on tablets and phones */
+        @media (max-width: 991px) {
+            #section-work .work-list_list {
+                grid-template-columns: 1fr !important;
+            }
+            #section-work .work-list_block {
+                height: 500px !important; /* Slightly smaller on mobile */
+            }
         }
     </style>
 
