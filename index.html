@@ -45,33 +45,30 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* 5. SELECTED WORK AREA - SMALLER FRAMES & FITTED IMAGES */
-        /* Make the items smaller by restricting max-width */
+        /* 5. SELECTED WORK - UNIFORM SIZE & CONTAINED */
+        /* Constrain the width of the container to make it "smaller" */
         #section-work .work-list_item {
-            max-width: 350px; /* Adjust this value to make them bigger/smaller */
-            margin: 0 auto 30px auto; /* Center items and add bottom spacing */
+            max-width: 400px !important;
+            margin: 0 auto 40px auto; /* Centers the item and adds space below */
         }
 
-        /* Define the frame aspect ratio and ensure overflow is hidden for borders */
+        /* Create a fixed-height frame so all boxes are exactly the same size */
         #section-work .work-list_block {
-            aspect-ratio: 3 / 4; /* Sets a consistent portrait frame */
-            width: 100%;
-            position: relative;
-            overflow: hidden; /* Ensures image stays within any borders/radius */
+            height: 450px !important; /* Fixed height for uniformity */
+            width: 100% !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* Ensure the link wrapper fills the block */
-        #section-work .work-list_link {
-            display: block;
-            width: 100%;
-            height: 100%;
-        }
-
-        /* Force image to fill the defined frame completely */
+        /* Force image to fit INSIDE the frame without cropping */
         #section-work .work-list_img {
             width: 100% !important;
             height: 100% !important;
-            object-fit: cover !important; /* This makes the image fill the frame, cropping edges if necessary */
+            
+            /* 'contain' ensures the whole photo is seen (no crops) 
+               but it stays strictly within the 450px frame defined above */
+            object-fit: contain !important; 
         }
     </style>
 
