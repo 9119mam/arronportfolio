@@ -47,14 +47,14 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* --- 2. WORK GRID STYLING (Applies to both Selected Work & Drone) --- */
+        /* --- 2. WORK GRID STYLING (Dynamic Borders & Small Gaps) --- */
 
-        /* Grid Layout: 2 Columns with TIGHT GAP */
+        /* Grid Layout: 2 Columns with TIGHT 8px GAP */
         #section-work .work-list_list, 
         #section-drone .work-list_list {
             display: grid !important;
             grid-template-columns: 1fr 1fr !important; /* 2 Equal Columns */
-            gap: 10px !important; /* Very small gap */
+            gap: 8px !important; /* Very tight, professional gap */
             width: 100% !important;
             margin-top: 20px;
         }
@@ -67,38 +67,51 @@
             margin: 0 !important;
         }
 
-        /* The Frame: BIGGER "Poster" size with BORDERS */
+        /* The Frame Container (Invisible Box) */
+        /* This holds the image in the center but doesn't have the border itself */
         #section-work .work-list_block,
         #section-drone .work-list_block {
             width: 100% !important;
-            height: 850px !important; /* Increased height for bigger impact */
+            height: 850px !important; /* Tall "Poster" height space */
             background-color: transparent !important;
-            border: 1px solid rgba(255, 255, 255, 0.3) !important; /* Visible border on every item */
+            border: none !important; /* No border on the box */
             position: relative;
-            overflow: hidden;
+            overflow: visible; /* Allow shadows to show */
             display: flex;
-            align-items: center;
-            justify-content: center;
+            align-items: center; /* Vertically center the image */
+            justify-content: center; /* Horizontally center the image */
+            padding: 10px; /* Padding to ensure border doesn't hit the edge */
         }
 
-        /* The Image: Full Resolution, No Cropping */
+        /* The Image: DYNAMIC BORDER & SIZE */
         #section-work .work-list_img,
         #section-drone .work-list_img {
-            width: 100% !important;
-            height: 100% !important;
-            object-fit: contain !important; /* Entire image visible */
-            object-position: center !important;
-            transition: transform 0.5s ease;
+            /* Reset width/height to auto so the image takes its natural shape */
+            width: auto !important;
+            height: auto !important;
+            
+            /* Constrain it so it never exceeds the container */
+            max-width: 100% !important;
+            max-height: 100% !important;
+            
+            /* The BORDER now sits on the image itself */
+            border: 1px solid rgba(255, 255, 255, 0.4) !important;
+            
+            /* Professional Shadow to lift it off the background */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            
+            transition: transform 0.5s ease, border-color 0.3s ease;
         }
 
-        /* Hover Effect */
+        /* Hover Effect: Scale the image and brighten the border */
         #section-work .work-list_block:hover .work-list_img,
         #section-drone .work-list_block:hover .work-list_img {
-            transform: scale(1.02);
+            transform: scale(1.015);
+            border-color: rgba(255, 255, 255, 0.8) !important;
         }
 
-        /* Hide the text descriptions as requested */
-        .work-list_name {
+        /* Hide text descriptions */
+        .work-meta, .work-list_name {
             display: none !important;
         }
 
@@ -107,11 +120,11 @@
             #section-work .work-list_list,
             #section-drone .work-list_list {
                 grid-template-columns: 1fr !important; /* Stack to 1 column */
-                gap: 20px !important;
+                gap: 15px !important;
             }
             #section-work .work-list_block,
             #section-drone .work-list_block {
-                height: 550px !important; /* Smaller on mobile but still tall */
+                height: 550px !important; /* Adjusted height for mobile */
             }
         }
     </style>
