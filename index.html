@@ -382,6 +382,7 @@
     <script src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/js/webflow.schunk.4d1b0d70d0d5adb5.js" type="text/javascript"></script>
     <script src="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/js/webflow.262753a9.dc64398d9726463c.js" type="text/javascript"></script>
 
+    <!-- Parallax script (yours) -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const headerSection = document.getElementById('hero-section');
@@ -391,20 +392,44 @@
 
             if(headerSection) {
                 headerSection.addEventListener('mousemove', (e) => {
-                    // Calculate relative position (0.5 is center)
                     const x = (e.clientX / window.innerWidth) - 0.5;
                     const y = (e.clientY / window.innerHeight) - 0.5;
 
-                    // Apply buttery smooth parallax via transforms
-                    // NOTE: We keep scale(1.05) here to maintain the "zoom" so no edges show
                     if(blurContainer) blurContainer.style.transform = `scale(1.05) translate(${x * -20}px, ${y * -20}px)`;
                     if(sharpContainer) sharpContainer.style.transform = `scale(1.05) translate(${x * -20}px, ${y * -20}px)`;
-                    
-                    // The Frame moves slightly more to create 3D depth
                     if(frame) frame.style.transform = `scale(1.05) translate(${x * -35}px, ${y * -35}px)`;
                 });
             }
         });
     </script>
+
+    <!-- ✅ Image swap script (NEW) -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const blurImgs = document.querySelectorAll(".home-header_blur-img");
+        const sharpImgs = document.querySelectorAll(".home-header_sharp-img");
+
+        let index = 0;
+        const duration = 3000; // 3 seconds
+
+        setInterval(() => {
+          blurImgs.forEach((img, i) => {
+            img.style.transition = "opacity 0.8s ease";
+            img.style.opacity = i === index ? "1" : "0";
+          });
+
+          sharpImgs.forEach((img, i) => {
+            img.style.transition = "opacity 0.8s ease, filter 0.8s ease";
+            img.style.opacity = i === index ? "1" : "0";
+            img.style.filter = i === index ? "blur(0px)" : "blur(30px)";
+          });
+
+          index = (index + 1) % blurImgs.length;
+        }, duration);
+      });
+    </script>
+
 </body>
 </html>
+
+
