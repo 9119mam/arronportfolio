@@ -20,6 +20,43 @@
     <link href="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/css/focusly-template.webflow.shared.dc6b0d070.css" rel="stylesheet" type="text/css"/>
 
     <style>
+        /* === CRITICAL OVERRIDES TO STOP ALL MOVEMENT === */
+        
+        /* 1. Force the Header Section to be static (no sliding) */
+        .section_home-header {
+            transform: none !important;
+            opacity: 1 !important;
+        }
+
+        /* 2. Force the Images to be static, visible, and sharp */
+        .home-header_blur-img, .home-header_sharp-img {
+            position: absolute !important;
+            top: 0; left: 0; width: 100%; height: 100%;
+            transform: none !important; /* STOPS MOVEMENT */
+            transition: none !important; /* STOPS ANIMATION */
+            animation: none !important; /* STOPS LOOPS */
+        }
+
+        /* Force Blur Image Settings */
+        .home-header_blur-img._1 {
+            opacity: 1 !important;
+            z-index: 1;
+            filter: blur(20px); /* Keep background blurred */
+        }
+
+        /* Force Sharp Image Settings */
+        .home-header_sharp-img._1 {
+            opacity: 1 !important;
+            z-index: 2; /* Sit on top */
+            filter: none !important; /* NO BLUR */
+            display: block !important;
+        }
+
+        /* Hide the 2nd images forever */
+        .home-header_blur-img._2, .home-header_sharp-img._2 {
+            display: none !important;
+        }
+
         /* Hide Webflow badge & buy button */
         .w-webflow-badge, .buy-template { display:none !important; }
     </style>
@@ -81,7 +118,7 @@
         </div>
 
         <main class="main-wrapper">
-            <section data-w-id="a5d0197b-4bad-3d7b-35c5-035e655f7008" class="section_home-header">
+            <section class="section_home-header">
                 
                 <div class="home-header_blur-images">
                     <img 
@@ -89,7 +126,6 @@
                         loading="eager" 
                         alt="Mason Marsden Portfolio" 
                         class="home-header_blur-img _1" 
-                        style="opacity: 1 !important; transform: none !important; filter: blur(20px);"
                     />
                 </div>
                 
@@ -99,7 +135,6 @@
                         loading="eager" 
                         alt="Mason Marsden Portfolio" 
                         class="home-header_sharp-img _1" 
-                        style="opacity: 1 !important; transform: none !important;"
                     />
                     
                     <div class="home-header_frame">
