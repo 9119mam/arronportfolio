@@ -20,7 +20,9 @@
     <link href="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/css/focusly-template.webflow.shared.dc6b0d070.css" rel="stylesheet" type="text/css"/>
 
     <style>
-        /* 1. ANIMATION PRE-LOAD STATES */
+        /* --- 1. GENERAL TWEAKS --- */
+        
+        /* Animation Pre-load States */
         @media (min-width:992px) {
             html.w-mod-js:not(.w-mod-ix) [data-w-id="b54acf21-06a6-3000-01a4-555cd104c2f5"] {display:flex;}
             html.w-mod-js:not(.w-mod-ix) [data-w-id="b54acf21-06a6-3000-01a4-555cd104c2f7"] {width:0px;}
@@ -28,7 +30,7 @@
             html.w-mod-js:not(.w-mod-ix) [data-w-id="b54acf21-06a6-3000-01a4-555cd104c2f8"] {opacity:0;}
         }
         
-        /* 2. REMOVE WEBFLOW WATERMARK/BADGE */
+        /* Remove Webflow Badge */
         .w-webflow-badge, .w-webflow-badge * {
             display: none !important;
             visibility: hidden !important;
@@ -36,64 +38,75 @@
             pointer-events: none !important;
         }
 
-        /* 3. HIDE BUY BUTTON */
+        /* Hide Buy Button */
         .buy-template { display:none !important; }
 
-        /* 4. HIGH-END FONT RENDERING */
+        /* Smooth Fonts */
         * {
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* 5. SELECTED WORK - 2 COLUMNS, GAP, BIGGER IMAGES */
-        
-        /* Grid Container setup */
+        /* --- 2. SELECTED WORK SECTION FIXES --- */
+
+        /* The Grid Layout: 2 Columns with gap */
         #section-work .work-list_list {
             display: grid !important;
-            grid-template-columns: 1fr 1fr !important; /* Creates 2 equal columns */
-            gap: 40px !important; /* Adds the gap between columns */
+            grid-template-columns: 1fr 1fr !important; /* 2 Equal Columns */
+            gap: 40px !important; /* Space between photos */
             width: 100% !important;
+            margin-top: 20px;
         }
 
-        /* Allow items to fill the column width */
+        /* The Item Container: Full width of the grid column */
         #section-work .work-list_item {
-            max-width: none !important; 
             width: 100% !important;
+            max-width: none !important;
             margin: 0 !important;
         }
 
-        /* The Frame - Increased height significantly for "Bigger" poster look */
+        /* The Frame: "Poster" size */
         #section-work .work-list_block {
             width: 100% !important;
-            height: 750px !important; /* Big poster height */
+            height: 750px !important; /* Tall "Poster" height */
+            background-color: #0f0f0f; /* Dark background to frame the image */
+            border: 1px solid rgba(255,255,255,0.1); /* Subtle border */
             position: relative;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* The Link/Wrapper */
-        #section-work .work-list_link {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-
-        /* The Image - Fill the large frame */
+        /* The Image: Full Resolution, No Cropping */
         #section-work .work-list_img {
             width: 100% !important;
             height: 100% !important;
-            /* 'cover' fills the grid cell completely (poster style). 
-               If you prefer no cropping at all (but with potential whitespace), change this to 'contain' */
-            object-fit: cover !important; 
+            /* 'contain' ensures the whole image fits in the frame without being cut */
+            object-fit: contain !important; 
             object-position: center !important;
+            transition: transform 0.5s ease;
         }
 
-        /* Mobile Response: Stack to 1 column on tablets and phones */
+        /* Subtle Hover Effect */
+        #section-work .work-list_block:hover .work-list_img {
+            transform: scale(1.02);
+        }
+
+        /* Fix Name Label positioning */
+        #section-work .work-list_name {
+            margin-top: 15px;
+            font-size: 1.2rem;
+        }
+
+        /* --- 3. MOBILE RESPONSIVENESS --- */
         @media (max-width: 991px) {
             #section-work .work-list_list {
-                grid-template-columns: 1fr !important;
+                grid-template-columns: 1fr !important; /* Stack to 1 column on tablet/mobile */
+                gap: 20px !important;
             }
             #section-work .work-list_block {
-                height: 500px !important; /* Slightly smaller on mobile */
+                height: 500px !important; /* Slightly shorter frame on mobile */
             }
         }
     </style>
@@ -306,25 +319,25 @@
                                     <div data-w-id="07d0612c-d2c3-5c62-a1ed-b659ca677e7a" class="work-list_block">
                                         <a aria-label="link to work page" data-w-id="c3aa485f-cc12-d93a-d282-f27efdbfbca1" href="#section-work" class="work-list_link w-inline-block">
                                             <img src="https://cdn.prod.website-files.com/682ce02e04a40f0fec89ebb7/682d12a7eb54c99446a02775_man-1-final.webp" loading="eager" alt="" class="work-list_img"/>
-                                            <div class="work-list_name"><div class="dot"></div><div>Bronx</div></div>
                                         </a>
                                     </div>
+                                    <div class="work-list_name"><div class="dot"></div><div>Bronx</div></div>
                                 </div>
                                 <div role="listitem" class="work-list_item w-dyn-item">
                                     <div data-w-id="07d0612c-d2c3-5c62-a1ed-b659ca677e7a" class="work-list_block">
                                         <a aria-label="link to work page" data-w-id="c3aa485f-cc12-d93a-d282-f27efdbfbca1" href="#section-work" class="work-list_link w-inline-block">
                                             <img src="https://cdn.prod.website-files.com/682ce02e04a40f0fec89ebb7/682d216e96bfe0471eba4e11_woman-final.webp" loading="eager" alt="" class="work-list_img"/>
-                                            <div class="work-list_name"><div class="dot"></div><div>Movve</div></div>
                                         </a>
                                     </div>
+                                    <div class="work-list_name"><div class="dot"></div><div>Movve</div></div>
                                 </div>
                                 <div role="listitem" class="work-list_item w-dyn-item">
                                     <div data-w-id="07d0612c-d2c3-5c62-a1ed-b659ca677e7a" class="work-list_block">
                                         <a aria-label="link to work page" data-w-id="c3aa485f-cc12-d93a-d282-f27efdbfbca1" href="#section-work" class="work-list_link w-inline-block">
                                             <img src="https://cdn.prod.website-files.com/682ce02e04a40f0fec89ebb7/682ce1a51a3a520ccb35431f_Three%20Men%20Outdoors.webp" loading="eager" alt="" class="work-list_img"/>
-                                            <div class="work-list_name"><div class="dot"></div><div>Minimalista</div></div>
                                         </a>
                                     </div>
+                                    <div class="work-list_name"><div class="dot"></div><div>Minimalista</div></div>
                                 </div>
                             </div>
                         </div>
