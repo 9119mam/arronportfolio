@@ -20,49 +20,57 @@
     <link href="https://cdn.prod.website-files.com/68264700ea161932bdd80da7/css/focusly-template.webflow.shared.dc6b0d070.css" rel="stylesheet" type="text/css"/>
 
     <style>
-        /* === CUSTOM CSS ANIMATION OVERRIDES === */
+        /* === CUSTOM ANIMATION & LAYOUT OVERRIDES === */
 
-        /* 1. Stop parallax movement on the container */
+        /* 1. Stop the container from sliding out of view (Fixes the black screen bug) */
         .section_home-header {
             transform: none !important;
+            overflow: hidden !important; /* Ensures the zoom doesn't spill over */
         }
 
-        /* 2. Ensure images stack correctly and don't move physically */
+        /* 2. Base settings for images (Force absolute positioning) */
         .home-header_blur-img, .home-header_sharp-img {
             position: absolute !important;
             top: 0; left: 0; width: 100%; height: 100%;
-            transform: none !important; /* Stop Webflow's sliding effect */
-            transition: none !important; /* Stop Webflow's transition interference */
+            transition: none !important; /* Disable Webflow transitions */
         }
 
-        /* 3. Define the slow crossfade animations (20s total cycle) */
+        /* 3. Define the "Cinematic Pan/Zoom + Fade" Animations 
+           Total Cycle: 20 Seconds
+        */
         
-        /* Animation for Image 1 (Starts visible, fades out halfway) */
-        @keyframes slowFade1 {
-            0%, 45% { opacity: 1; z-index: 2;} 
-            55%, 100% { opacity: 0; z-index: 1;}
+        /* Animation for Image 1 (Starts visible, zooms in slightly, fades out) */
+        @keyframes cinematicFade1 {
+            0%   { opacity: 1; transform: scale(1); z-index: 2; }
+            45%  { opacity: 1; transform: scale(1.05); z-index: 2; } /* Fully visible, zoomed in 5% */
+            55%  { opacity: 0; transform: scale(1.06); z-index: 1; } /* Fades out */
+            100% { opacity: 0; transform: scale(1.1); z-index: 1; } /* Continues moving hidden */
         }
 
-        /* Animation for Image 2 (Starts hidden, fades in halfway) */
-        @keyframes slowFade2 {
-            0%, 45% { opacity: 0; z-index: 1;}
-            55%, 100% { opacity: 1; z-index: 2;}
+        /* Animation for Image 2 (Starts hidden, zoomed in, fades in, zooms out) */
+        @keyframes cinematicFade2 {
+            0%   { opacity: 0; transform: scale(1.1); z-index: 1; } /* Starts hidden & zoomed in */
+            45%  { opacity: 0; transform: scale(1.06); z-index: 1; } 
+            55%  { opacity: 1; transform: scale(1.05); z-index: 2; } /* Fades in */
+            100% { opacity: 1; transform: scale(1); z-index: 2; } /* Ends visible & zoomed out */
         }
 
-        /* 4. Apply the animations to the specific images */
-        /* Applying to both blur and sharp versions simultaneously */
+        /* 4. Apply animations to the images */
+        
+        /* MASON IMAGE (Image 1) */
         .home-header_blur-img._1, .home-header_sharp-img._1 {
-            animation: slowFade1 20s infinite ease-in-out !important;
-            opacity: 1; /* Starting state */
+            animation: cinematicFade1 20s infinite ease-in-out !important;
+            opacity: 1; 
         }
         
+        /* GRADIENT IMAGE (Image 2) */
         .home-header_blur-img._2, .home-header_sharp-img._2 {
-            animation: slowFade2 20s infinite ease-in-out !important;
-            opacity: 0; /* Starting state */
-            display: block !important; /* Ensure it's not hidden by default */
+            animation: cinematicFade2 20s infinite ease-in-out !important;
+            opacity: 0; 
+            display: block !important; 
         }
 
-        /* 5. Ensure sharp images are actually sharp */
+        /* 5. Force sharp images to actually be sharp */
         .home-header_sharp-img {
             filter: none !important;
         }
@@ -163,6 +171,7 @@
                     <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"><div class="home-header_number-wrap"><div class="home-header_number">01</div></div></div></div>
                     <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"></div></div>
                     <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"><div class="home-header_number-wrap"><div class="home-header_number">02</div></div></div></div>
+                    <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"></div></div>
                     <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"></div></div>
                     <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"></div></div>
                 </div>
