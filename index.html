@@ -47,16 +47,26 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* --- 2. WORK GRID STYLING (Dynamic Borders & Small Gaps) --- */
+        /* --- 2. WORK GRID STYLING (Dynamic Layout & Rounded Borders) --- */
 
-        /* Grid Layout: 2 Columns with TIGHT 8px GAP */
+        /* Grid Layout: 2 Columns base with tight gap */
         #section-work .work-list_list, 
         #section-drone .work-list_list {
             display: grid !important;
-            grid-template-columns: 1fr 1fr !important; /* 2 Equal Columns */
-            gap: 8px !important; /* Very tight, professional gap */
+            grid-template-columns: 1fr 1fr !important; /* 2 Equal Columns base */
+            gap: 15px !important; /* Professional, tight gap */
             width: 100% !important;
             margin-top: 20px;
+        }
+
+        /* --- DYNAMIC POSTER SIZING LOGIC --- */
+        /* Make the FIRST item in Selected Work span full width (2 columns) */
+        #section-work .work-list_list .work-list_item:nth-child(1) {
+            grid-column: span 2 !important;
+        }
+        /* Make the FIRST item in Drone section span full width (2 columns) */
+        #section-drone .work-list_list .work-list_item:nth-child(1) {
+             grid-column: span 2 !important;
         }
 
         /* The Item Container */
@@ -67,47 +77,52 @@
             margin: 0 !important;
         }
 
-        /* The Frame Container (Invisible Box) */
-        /* This holds the image in the center but doesn't have the border itself */
+        /* The Frame Container (Invisible Box holding the image) */
         #section-work .work-list_block,
         #section-drone .work-list_block {
             width: 100% !important;
-            height: 850px !important; /* Tall "Poster" height space */
+            /* Standard height for normal items */
+            height: 850px !important; 
             background-color: transparent !important;
-            border: none !important; /* No border on the box */
+            border: none !important; 
             position: relative;
-            overflow: visible; /* Allow shadows to show */
+            overflow: visible; 
             display: flex;
-            align-items: center; /* Vertically center the image */
-            justify-content: center; /* Horizontally center the image */
-            padding: 10px; /* Padding to ensure border doesn't hit the edge */
+            align-items: center; 
+            justify-content: center; 
+            padding: 5px; 
         }
 
-        /* The Image: DYNAMIC BORDER & SIZE */
+        /* --- EXTRA HEIGHT FOR THE BIG POSTERS --- */
+        /* Make the container for the spanning items taller for more impact */
+        #section-work .work-list_list .work-list_item:nth-child(1) .work-list_block,
+        #section-drone .work-list_list .work-list_item:nth-child(1) .work-list_block {
+            height: 1000px !important;
+        }
+
+
+        /* The Image: ROUNDED BORDER & SHADOW */
         #section-work .work-list_img,
         #section-drone .work-list_img {
-            /* Reset width/height to auto so the image takes its natural shape */
             width: auto !important;
             height: auto !important;
-            
-            /* Constrain it so it never exceeds the container */
             max-width: 100% !important;
             max-height: 100% !important;
             
-            /* The BORDER now sits on the image itself */
+            /* ROUNDED BORDERS APPLIED HERE */
+            border-radius: 16px !important;
             border: 1px solid rgba(255, 255, 255, 0.4) !important;
             
-            /* Professional Shadow to lift it off the background */
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            
-            transition: transform 0.5s ease, border-color 0.3s ease;
+            transition: transform 0.5s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* Hover Effect: Scale the image and brighten the border */
+        /* Hover Effect */
         #section-work .work-list_block:hover .work-list_img,
         #section-drone .work-list_block:hover .work-list_img {
             transform: scale(1.015);
-            border-color: rgba(255, 255, 255, 0.8) !important;
+            border-color: rgba(255, 255, 255, 0.9) !important;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.7);
         }
 
         /* Hide text descriptions */
@@ -119,12 +134,23 @@
         @media (max-width: 991px) {
             #section-work .work-list_list,
             #section-drone .work-list_list {
-                grid-template-columns: 1fr !important; /* Stack to 1 column */
+                grid-template-columns: 1fr !important; /* Stack everything to 1 column */
                 gap: 15px !important;
             }
+            /* Reset spans on mobile so everything stacks normally */
+            #section-work .work-list_list .work-list_item:nth-child(1),
+            #section-drone .work-list_list .work-list_item:nth-child(1) {
+                grid-column: span 1 !important;
+            }
+
             #section-work .work-list_block,
             #section-drone .work-list_block {
-                height: 550px !important; /* Adjusted height for mobile */
+                height: 550px !important; /* Standard mobile height */
+            }
+             /* Reset extra height for posters on mobile */
+            #section-work .work-list_list .work-list_item:nth-child(1) .work-list_block,
+            #section-drone .work-list_list .work-list_item:nth-child(1) .work-list_block {
+                height: 550px !important;
             }
         }
     </style>
@@ -218,7 +244,6 @@
                     <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"><div class="home-header_number-wrap"><div class="home-header_number">01</div></div></div></div>
                     <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"></div></div>
                     <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"><div class="home-header_number-wrap"><div class="home-header_number">02</div></div></div></div>
-                    <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"></div></div>
                     <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"></div></div>
                     <div class="home-header_line-group"><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line"></div><div class="home-header_line main"></div></div>
                 </div>
