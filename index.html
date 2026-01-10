@@ -11,7 +11,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-    <script src="https://unpkg.com/split-type"></script>
 
     <style>
         * {
@@ -31,7 +30,7 @@
         }
 
         /* =========================================
-           TRUE PRELOADER STYLES
+           PRELOADER
            ========================================= */
         #preloader {
             position: fixed;
@@ -45,7 +44,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: opacity 0.5s ease;
         }
 
         .loader-text {
@@ -70,7 +69,7 @@
             position: absolute;
             left: 0;
             top: 0;
-            transition: width 0.2s linear;
+            transition: width 0.1s linear;
         }
 
         /* =========================================
@@ -87,19 +86,12 @@
             color: var(--text-primary);
             overflow-x: hidden;
             line-height: 1.6;
-            opacity: 0; /* Hidden until preloader finishes */
-            visibility: hidden;
+            opacity: 0; /* Hidden until loaded */
             transition: opacity 0.5s ease;
         }
 
         body.loaded {
             opacity: 1;
-            visibility: visible;
-        }
-
-        /* Performance: Tell browser to expect changes */
-        .will-animate {
-            will-change: transform, opacity;
         }
 
         /* Header Styles */
@@ -109,11 +101,12 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(10, 10, 10, 0.85); /* Slightly less transp for performance */
+            backdrop-filter: blur(10px); /* Reduced blur radius for performance */
+            -webkit-backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255,255,255,0.05);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.3s ease;
+            will-change: transform;
         }
 
         .header-hidden {
@@ -176,6 +169,7 @@
             text-align: center;
             position: relative;
             z-index: 2;
+            /* Removed will-change here to let GSAP handle it */
         }
 
         .hero-title {
@@ -184,13 +178,9 @@
             line-height: 0.9;
             letter-spacing: -0.02em;
             margin: 0;
-            overflow: hidden; /* For text reveal */
-        }
-
-        /* Hero Text Masking for Animation */
-        .char {
-            transform: translateY(115%);
-            transition: transform 0.5s;
+            /* Simple fade in setup */
+            opacity: 0; 
+            transform: translateY(50px);
         }
 
         .hero-subtitle {
@@ -199,6 +189,7 @@
             margin-top: 2rem;
             color: var(--text-secondary);
             opacity: 0;
+            transform: translateY(20px);
         }
 
         .hero-description {
@@ -206,6 +197,7 @@
             margin-top: 1rem;
             font-weight: 300;
             opacity: 0;
+            transform: translateY(20px);
         }
 
         /* Portfolio Grid */
@@ -236,22 +228,20 @@
             cursor: pointer;
             border: 1px solid var(--border-color);
             background: #111;
-            /* Hidden initially for GSAP */
+            /* Clean start for animation */
             opacity: 0; 
-            visibility: hidden;
         }
 
         .grid-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            /* Start zoomed in for parallax */
-            transform: scale(1.2); 
-            will-change: transform;
+            /* Removed scale transform to improve performance */
+            transition: transform 0.5s ease;
         }
 
         .grid-item:hover img {
-            /* Hover logic handled via GSAP now for performance */
+            transform: scale(1.05);
         }
 
         /* About Section */
@@ -274,9 +264,8 @@
 
         .about-image img {
             width: 100%;
-            height: 120%;
+            height: 100%; /* Reset to 100% to stop parallax jitter */
             object-fit: cover;
-            transform-origin: center;
         }
 
         .about-content h2 {
@@ -348,7 +337,6 @@
             overflow: hidden;
             position: relative;
             opacity: 0;
-            visibility: hidden;
             background: #0a0a0a;
         }
 
@@ -356,7 +344,11 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transform: scale(1.1);
+            transition: transform 0.5s ease;
+        }
+
+        .drone-item:hover img {
+            transform: scale(1.05);
         }
 
         /* Stats Section */
@@ -707,7 +699,7 @@
 </head>
 <body>
     <div id="preloader">
-        <div class="loader-text">LOADING ASSETS... <span id="progress-text">0%</span></div>
+        <div class="loader-text">LOADING... <span id="progress-text">0%</span></div>
         <div class="progress-container">
             <div class="progress-bar" id="progress-bar"></div>
         </div>
@@ -732,19 +724,19 @@
     <section class="portfolio-grid">
         <h2 class="section-header reveal-text">graphics designs</h2>
         <div class="grid">
-            <div class="grid-item"><img src="https://framerusercontent.com/images/1c70ZJ4jnME4U3aiOO1YlDUhM.png?width=800" alt="Portfolio 1"></div>
-            <div class="grid-item"><img src="https://framerusercontent.com/images/BkSeAWqzoddN4UIE3o6NQVtE6o.jpg?width=800" alt="Portfolio 2"></div>
-            <div class="grid-item"><img src="https://framerusercontent.com/images/KkFCWZXjtpYWLB12EMb5LgRZBc.jpg?width=800" alt="Portfolio 3"></div>
-            <div class="grid-item"><img src="https://framerusercontent.com/images/2aDFRhNi25p3TiUGwoZtNnaI95M.jpg?width=800" alt="Portfolio 4"></div>
-            <div class="grid-item"><img src="https://framerusercontent.com/images/HqBekWJ4JXjhfTViZKdOoPzv2A.jpg?width=800" alt="Portfolio 5"></div>
-            <div class="grid-item"><img src="https://framerusercontent.com/images/YcOvDalZkIPD7eCdiR1gIVt9Gq4.jpg?width=800" alt="Portfolio 6"></div>
-            <div class="grid-item"><img src="https://framerusercontent.com/images/zRbRUXgxy9G6Pmv74hK9HBnReg.png?width=800" alt="Portfolio 7"></div>
+            <div class="grid-item"><img src="https://framerusercontent.com/images/1c70ZJ4jnME4U3aiOO1YlDUhM.png?width=800" decoding="async" alt="Portfolio 1"></div>
+            <div class="grid-item"><img src="https://framerusercontent.com/images/BkSeAWqzoddN4UIE3o6NQVtE6o.jpg?width=800" decoding="async" alt="Portfolio 2"></div>
+            <div class="grid-item"><img src="https://framerusercontent.com/images/KkFCWZXjtpYWLB12EMb5LgRZBc.jpg?width=800" decoding="async" alt="Portfolio 3"></div>
+            <div class="grid-item"><img src="https://framerusercontent.com/images/2aDFRhNi25p3TiUGwoZtNnaI95M.jpg?width=800" decoding="async" alt="Portfolio 4"></div>
+            <div class="grid-item"><img src="https://framerusercontent.com/images/HqBekWJ4JXjhfTViZKdOoPzv2A.jpg?width=800" decoding="async" alt="Portfolio 5"></div>
+            <div class="grid-item"><img src="https://framerusercontent.com/images/YcOvDalZkIPD7eCdiR1gIVt9Gq4.jpg?width=800" decoding="async" alt="Portfolio 6"></div>
+            <div class="grid-item"><img src="https://framerusercontent.com/images/zRbRUXgxy9G6Pmv74hK9HBnReg.png?width=800" decoding="async" alt="Portfolio 7"></div>
         </div>
     </section>
 
     <section class="about-section" id="about">
         <div class="about-image">
-            <img src="https://framerusercontent.com/images/70q9uMI62o8Y33vWRNjD1EX8rzg.png?width=1000" alt="Mason" class="parallax-img">
+            <img src="https://framerusercontent.com/images/70q9uMI62o8Y33vWRNjD1EX8rzg.png?width=1000" decoding="async" alt="Mason">
         </div>
         <div class="about-content">
             <h2 class="reveal-text">about me</h2>
@@ -760,10 +752,10 @@
             <p class="services-label reveal-text">Fast Delivery</p>
         </div>
         <div class="drone-grid">
-            <div class="drone-item"><img src="https://framerusercontent.com/images/ftIV2U5Sx0nheTxlkf9A4BXqBc.jpeg?width=600" alt="Drone photo"></div>
-            <div class="drone-item"><img src="https://framerusercontent.com/images/9zixpYJqGMkuExU9eUI98QrjZM.jpeg?width=600" alt="Drone photo"></div>
-            <div class="drone-item"><img src="https://framerusercontent.com/images/jjDquwjjTiy8NaDuxTsE2d8DCc0.jpeg?width=600" alt="Drone photo"></div>
-            <div class="drone-item"><img src="https://framerusercontent.com/images/9eondpPBPp0qmAJywGZUgUCc3E.jpeg?width=600" alt="Drone photo"></div>
+            <div class="drone-item"><img src="https://framerusercontent.com/images/ftIV2U5Sx0nheTxlkf9A4BXqBc.jpeg?width=600" decoding="async" alt="Drone photo"></div>
+            <div class="drone-item"><img src="https://framerusercontent.com/images/9zixpYJqGMkuExU9eUI98QrjZM.jpeg?width=600" decoding="async" alt="Drone photo"></div>
+            <div class="drone-item"><img src="https://framerusercontent.com/images/jjDquwjjTiy8NaDuxTsE2d8DCc0.jpeg?width=600" decoding="async" alt="Drone photo"></div>
+            <div class="drone-item"><img src="https://framerusercontent.com/images/9eondpPBPp0qmAJywGZUgUCc3E.jpeg?width=600" decoding="async" alt="Drone photo"></div>
         </div>
     </section>
 
@@ -787,11 +779,11 @@
         <h2 class="section-header reveal-text">2013 - Present</h2>
         <div class="carousel-container reveal-text">
             <div class="carousel-track" id="carouselTrack">
-                <div class="carousel-item"><img src="https://framerusercontent.com/images/z66OvftjTHyiPOiLnfWuQQWgVYo.jpg?width=600" alt="Experience 1"></div>
-                <div class="carousel-item"><img src="https://framerusercontent.com/images/CkRGbZ3Tef83yc5ibFgim9s6w.jpg?width=600" alt="Experience 2"></div>
-                <div class="carousel-item"><img src="https://framerusercontent.com/images/JwJTxroeEh0a7U32iDMSI6d6R8.jpg?width=600" alt="Experience 3"></div>
-                <div class="carousel-item"><img src="https://framerusercontent.com/images/VX1rSkalWuRIsRIh7yoySMaSpWU.jpg?width=600" alt="Experience 4"></div>
-                <div class="carousel-item"><img src="https://framerusercontent.com/images/edesi3zrngnOaaFS0ZO0deHO8W0.jpg?width=600" alt="Experience 5"></div>
+                <div class="carousel-item"><img src="https://framerusercontent.com/images/z66OvftjTHyiPOiLnfWuQQWgVYo.jpg?width=600" decoding="async" alt="Experience 1"></div>
+                <div class="carousel-item"><img src="https://framerusercontent.com/images/CkRGbZ3Tef83yc5ibFgim9s6w.jpg?width=600" decoding="async" alt="Experience 2"></div>
+                <div class="carousel-item"><img src="https://framerusercontent.com/images/JwJTxroeEh0a7U32iDMSI6d6R8.jpg?width=600" decoding="async" alt="Experience 3"></div>
+                <div class="carousel-item"><img src="https://framerusercontent.com/images/VX1rSkalWuRIsRIh7yoySMaSpWU.jpg?width=600" decoding="async" alt="Experience 4"></div>
+                <div class="carousel-item"><img src="https://framerusercontent.com/images/edesi3zrngnOaaFS0ZO0deHO8W0.jpg?width=600" decoding="async" alt="Experience 5"></div>
             </div>
             <div class="carousel-controls">
                 <button class="carousel-btn" onclick="scrollCarousel('left')">←</button>
@@ -883,7 +875,7 @@
         <a href="#contact" class="contact-btn reveal-text">CONTACT NOW</a>
         <div class="location-badge reveal-text">BASED IN Los Angeles, CALIFORNIA</div>
         <div class="cta-image reveal-text">
-            <img src="https://framerusercontent.com/images/u6Idk7qL4dVIYM1Dq4mj29hIpaM.jpg?scale-down-to=1024" alt="Designer">
+            <img src="https://framerusercontent.com/images/u6Idk7qL4dVIYM1Dq4mj29hIpaM.jpg?scale-down-to=1024" decoding="async" alt="Designer">
         </div>
     </section>
 
@@ -895,7 +887,7 @@
 
     <script>
         // ========================================
-        // 1. TRUE ASSET PRELOADER (The Magic Fix)
+        // 1. TRUE ASSET PRELOADER
         // ========================================
         const images = document.querySelectorAll('img');
         const totalImages = images.length;
@@ -915,7 +907,6 @@
             }
         }
 
-        // Force browser to load images immediately
         if (totalImages === 0) {
             initSite();
         } else {
@@ -924,32 +915,29 @@
                     updateProgress();
                 } else {
                     img.onload = updateProgress;
-                    img.onerror = updateProgress; // Don't hang if image fails
+                    img.onerror = updateProgress;
                 }
             });
         }
 
-        // Safety timeout: if images take longer than 7s, load anyway
         setTimeout(() => {
             if (loadedImages < totalImages) initSite();
         }, 7000);
 
         function initSite() {
-            if (preloader.style.opacity === '0') return; // prevent double firing
+            if (preloader.style.opacity === '0') return;
             
             preloader.style.opacity = '0';
             setTimeout(() => {
                 preloader.style.display = 'none';
                 document.body.classList.add('loaded');
-                
-                // Initialize all animations only after assets are ready
                 initLenis();
                 initGSAP();
             }, 600);
         }
 
         // ========================================
-        // 2. SMOOTH SCROLL (LENIS)
+        // 2. SMOOTH SCROLL
         // ========================================
         function initLenis() {
             const lenis = new Lenis({
@@ -972,34 +960,20 @@
         }
 
         // ========================================
-        // 3. GSAP ANIMATIONS
+        // 3. GSAP ANIMATIONS (OPTIMIZED)
         // ========================================
         function initGSAP() {
             gsap.registerPlugin(ScrollTrigger);
 
-            // --- A. HERO ANIMATION ---
-            // Split text for hero title
-            const heroTitle = new SplitType('.hero-title', { types: 'chars' });
-            
+            // A. HERO (Simple, non-broken fade up)
             const heroTl = gsap.timeline();
-            heroTl.from(heroTitle.chars, {
-                y: 100,
-                opacity: 0,
-                stagger: 0.05,
-                duration: 1,
-                ease: "power4.out",
-                delay: 0.2
-            })
-            .to('.hero-subtitle', { 
-                opacity: 1, y: 0, duration: 1, ease: 'power3.out', startAt: { y: 20 }
-            }, "-=0.8")
-            .to('.hero-description', { 
-                opacity: 1, y: 0, duration: 1, ease: 'power3.out', startAt: { y: 20 }
-            }, "-=0.8");
+            heroTl.to('.hero-title', { opacity: 1, y: 0, duration: 1.2, ease: "power3.out", delay: 0.2 })
+                  .to('.hero-subtitle', { opacity: 1, y: 0, duration: 1, ease: "power3.out" }, "-=0.8")
+                  .to('.hero-description', { opacity: 1, y: 0, duration: 1, ease: "power3.out" }, "-=0.8");
 
-            // Hero Parallax
+            // Hero Parallax (Efficient)
             gsap.to('.hero-title-wrapper', {
-                yPercent: 50,
+                yPercent: 40,
                 ease: 'none',
                 scrollTrigger: {
                     trigger: '.hero',
@@ -1009,73 +983,54 @@
                 }
             });
 
-            // --- B. PORTFOLIO GRID (Staggered Reveal) ---
+            // B. GRIDS (High Performance Reveal)
+            // Use force3D: true to push to GPU
             const gridItems = gsap.utils.toArray('.grid-item');
             ScrollTrigger.batch(gridItems, {
                 onEnter: batch => {
                     gsap.to(batch, {
-                        autoAlpha: 1,
-                        y: 0,
-                        stagger: 0.1,
+                        opacity: 1,
                         duration: 0.8,
-                        ease: 'power4.out',
-                        startAt: { y: 60, autoAlpha: 0 }
+                        stagger: 0.1,
+                        ease: 'power2.out',
+                        force3D: true // Vital for no lag
                     });
                 },
-                start: "top 85%"
+                start: "top 90%"
             });
 
-            // Grid Image Parallax (Zoom effect)
-            gridItems.forEach(item => {
-                const img = item.querySelector('img');
-                gsap.to(img, {
-                    scale: 1, // Scale down from 1.2 to 1
-                    ease: 'none',
-                    scrollTrigger: {
-                        trigger: item,
-                        start: 'top bottom',
-                        end: 'bottom top',
-                        scrub: true
-                    }
-                });
-                
-                // Add hover effect via GSAP for better performance
-                item.addEventListener('mouseenter', () => gsap.to(img, { scale: 1.05, duration: 0.5 }));
-                item.addEventListener('mouseleave', () => gsap.to(img, { scale: 1, duration: 0.5, overwrite: 'auto' }));
-            });
-
-            // --- C. OTHER GRIDS (Drone, Tools) ---
+            // Drone Grid & Tools (Same smooth reveal)
             const genericBatches = gsap.utils.toArray('.drone-item, .tool-card, .stat-item');
             ScrollTrigger.batch(genericBatches, {
                 onEnter: batch => {
                     gsap.to(batch, {
-                        autoAlpha: 1,
-                        y: 0,
-                        stagger: 0.1,
+                        opacity: 1,
                         duration: 0.8,
-                        ease: 'power4.out',
-                        startAt: { y: 40, autoAlpha: 0 }
+                        stagger: 0.1,
+                        ease: 'power2.out',
+                        force3D: true
                     });
                 },
-                start: "top 85%"
+                start: "top 90%"
             });
 
-            // --- D. TEXT REVEALS ---
+            // C. TEXT REVEALS
             const textReveals = gsap.utils.toArray('.reveal-text');
             textReveals.forEach(text => {
                 gsap.from(text, {
-                    y: 50,
-                    autoAlpha: 0,
+                    y: 40,
+                    opacity: 0,
                     duration: 1,
-                    ease: 'power4.out',
+                    ease: 'power3.out',
+                    force3D: true,
                     scrollTrigger: {
                         trigger: text,
-                        start: 'top 90%'
+                        start: 'top 92%'
                     }
                 });
             });
 
-            // --- E. STAT COUNTERS ---
+            // D. STAT COUNTERS
             const statNumbers = document.querySelectorAll('.stat-number');
             statNumbers.forEach(stat => {
                 const target = +stat.getAttribute('data-target');
@@ -1101,7 +1056,6 @@
         // ========================================
         // 4. UTILS
         // ========================================
-        // Header Hide/Show
         let lastScroll = 0;
         const header = document.getElementById('main-header');
         window.addEventListener('scroll', () => {
@@ -1114,7 +1068,6 @@
             lastScroll = currentScroll;
         });
 
-        // Clock
         function updateClock() {
             const now = new Date();
             document.getElementById('clock').textContent = now.toLocaleTimeString('en-GB', { hour12: false });
@@ -1122,14 +1075,12 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // FAQ
         window.toggleFaq = function(element) {
             const isActive = element.classList.contains('active');
             document.querySelectorAll('.faq-item').forEach(item => item.classList.remove('active'));
             if (!isActive) element.classList.add('active');
         }
 
-        // Carousel
         window.scrollCarousel = function(direction) {
             const track = document.getElementById('carouselTrack');
             const scrollAmount = 420;
