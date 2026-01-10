@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mason - Portfolio (Apple Style)</title>
+    <title>Mason - Vision Pro Edition</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 
@@ -15,69 +15,105 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <style>
-        /* APPLE-STYLE SMOOTHNESS */
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: #f5f5f7; /* Apple's off-white */
-            color: #1d1d1f; /* Apple's almost-black */
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+        /* APPLE SYSTEM SETTINGS */
+        :root {
+            --apple-ease: cubic-bezier(0.32, 0.72, 0, 1);
         }
 
-        /* Hide Scrollbar */
-        ::-webkit-scrollbar { width: 0px; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Hide Scrollbar but allow scroll */
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
 
         /* Typography */
         .text-huge { font-size: clamp(3rem, 16vw, 18rem); line-height: 0.8; letter-spacing: -0.04em; }
         .text-big { font-size: clamp(2.5rem, 5vw, 5rem); line-height: 1.05; letter-spacing: -0.02em; }
 
-        /* Performance Optimizations */
-        .will-change-transform { will-change: transform; }
-        
-        /* Image Utilities */
-        .img-mask { overflow: hidden; border-radius: 1.5rem; transform: translateZ(0); }
-        .img-reveal { transform: scale(1.2); transition: none; will-change: transform; }
-        
-        /* Glassmorphism */
-        .glass-nav {
-            background: rgba(0, 0, 0, 0.7);
+        /* Apple-style Blur Nav */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .glass-nav-dark {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* Magnetic Button Base */
-        .btn-magnetic { transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1); }
+        /* Image Masking & Interactions */
+        .img-mask { 
+            overflow: hidden; 
+            border-radius: 1.25rem; 
+            transform: translateZ(0); /* Hardware acceleration */
+            cursor: zoom-in;
+            position: relative;
+        }
         
-        /* Mobile Menu */
-        #mobile-menu { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .img-zoom-scroll { 
+            transform: scale(1.15); 
+            will-change: transform; 
+            transition: transform 0.1s linear; /* Controlled by GSAP mostly */
+        }
+
+        /* Lightbox Animation Classes */
+        #lightbox {
+            transition: opacity 0.5s var(--apple-ease), backdrop-filter 0.5s var(--apple-ease);
+        }
+        #lightbox-img {
+            transition: transform 0.5s var(--apple-ease), opacity 0.5s var(--apple-ease);
+        }
         
         /* 3D Context */
-        .perspective-1000 { perspective: 1000px; }
-        .card-3d { transform-style: preserve-3d; backface-visibility: hidden; will-change: transform, opacity; }
+        .perspective-1200 { perspective: 1200px; }
+        .card-3d { transform-style: preserve-3d; backface-visibility: hidden; }
+
+        /* Magnetic Button */
+        .btn-magnetic { 
+            transition: transform 0.4s var(--apple-ease), background-color 0.3s ease; 
+        }
     </style>
 </head>
 <body class="antialiased" id="top">
 
-    <nav class="fixed top-0 w-full z-50 px-6 py-6 flex justify-between items-center transition-all duration-500 text-white mix-blend-difference" id="navbar">
-        <a href="#top" class="text-lg font-bold tracking-widest uppercase cursor-pointer z-50 relative">Mason</a>
+    <div id="lightbox" class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-2xl opacity-0 pointer-events-none flex items-center justify-center p-4 md:p-8" onclick="closeLightbox()">
+        <button class="absolute top-6 right-6 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300 backdrop-blur-md z-[101]">
+            <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+
+        <img id="lightbox-img" src="" class="max-w-full max-h-full w-auto h-auto object-contain rounded-lg shadow-2xl scale-95 opacity-0 select-none" onclick="event.stopPropagation()">
         
-        <div class="hidden md:flex items-center gap-1 text-sm font-medium bg-white/10 backdrop-blur-xl rounded-full px-2 py-2 border border-white/10">
+        <div class="absolute bottom-6 left-0 w-full text-center text-white/50 text-sm font-medium pointer-events-none">
+            Click outside to close
+        </div>
+    </div>
+
+    <nav class="fixed top-0 w-full z-50 px-6 py-6 flex justify-between items-center transition-all duration-700 text-white mix-blend-difference" id="navbar">
+        <a href="#top" class="text-lg font-bold tracking-widest uppercase cursor-pointer relative z-50">Mason</a>
+        
+        <div class="hidden md:flex items-center gap-2 text-sm font-medium bg-white/10 backdrop-blur-xl rounded-full px-2 py-2 border border-white/10 shadow-lg">
             <a href="#home" class="px-5 py-2 rounded-full hover:bg-white/20 transition-all duration-300">Home</a>
             <a href="#work" class="px-5 py-2 rounded-full hover:bg-white/20 transition-all duration-300">Work</a>
             <a href="#about" class="px-5 py-2 rounded-full hover:bg-white/20 transition-all duration-300">About</a>
-            <button onclick="document.getElementById('contact').scrollIntoView()" class="bg-white text-black px-6 py-2 rounded-full hover:scale-105 active:scale-95 transition-all duration-300 ml-2 font-semibold btn-magnetic">
+            <button onclick="document.getElementById('contact').scrollIntoView()" class="bg-white text-black px-6 py-2 rounded-full hover:scale-105 active:scale-95 transition-all duration-300 ml-2 font-semibold btn-magnetic shadow-lg">
                 Contact
             </button>
         </div>
 
-        <button class="md:hidden text-2xl z-50 relative p-2" onclick="toggleMenu()">
+        <button class="md:hidden text-2xl z-50 p-2" onclick="toggleMenu()">
             <i class="fa-solid fa-bars" id="menu-icon"></i>
         </button>
     </nav>
 
-    <div id="mobile-menu" class="fixed inset-0 bg-black z-40 transform translate-x-full flex flex-col justify-center items-center text-white gap-8 text-3xl font-bold">
+    <div id="mobile-menu" class="fixed inset-0 bg-black z-40 transform translate-x-full transition-transform duration-[0.8s] ease-[cubic-bezier(0.32,0.72,0,1)] flex flex-col justify-center items-center text-white gap-8 text-3xl font-bold">
         <a href="#home" onclick="toggleMenu()" class="hover:text-gray-400 transition">Home</a>
         <a href="#work" onclick="toggleMenu()" class="hover:text-gray-400 transition">Work</a>
         <a href="#about" onclick="toggleMenu()" class="hover:text-gray-400 transition">About</a>
@@ -89,26 +125,26 @@
             <img 
                 src="https://raw.githubusercontent.com/9119mam/arronportfolio/main/hero.jpg" 
                 onerror="this.src='https://images.unsplash.com/photo-1439405326854-014607f694d7?q=80&w=2500&auto=format&fit=crop'"
-                class="w-full h-full object-cover object-center scale-110 will-change-transform"
+                class="w-full h-full object-cover object-center scale-110"
                 id="hero-img"
                 alt="Hero"
             >
         </div>
 
         <div class="relative z-10 text-center overflow-hidden">
-            <h1 class="text-huge font-bold text-white uppercase leading-none opacity-0 translate-y-20" id="hero-text">
+            <h1 class="text-huge font-bold text-white uppercase leading-none opacity-0 translate-y-20 mix-blend-overlay" id="hero-text">
                 MASON
             </h1>
         </div>
         
-        <div class="absolute z-20 top-1/2 left-1/2 transform -translate-x-1/2 translate-y-[120px] opacity-0" id="hero-figure">
-            <div class="w-1 h-8 bg-white/90 shadow-[0_0_20px_rgba(255,255,255,1)]"></div>
+        <div class="absolute z-20 bottom-32 opacity-0" id="hero-figure">
+            <div class="w-[1px] h-12 bg-gradient-to-b from-transparent via-white to-transparent"></div>
         </div>
 
         <div class="absolute bottom-12 w-full px-8 flex justify-between text-white/60 text-[10px] font-bold uppercase tracking-widest z-20">
-            <span class="opacity-0 reveal-hero-ui">Based in London</span>
-            <span class="opacity-0 reveal-hero-ui cursor-pointer hover:text-white transition-colors" onclick="document.getElementById('work').scrollIntoView()">
-                Scroll <i class="fa-solid fa-arrow-down ml-1"></i>
+            <span class="opacity-0 reveal-hero-ui">London, UK</span>
+            <span class="opacity-0 reveal-hero-ui cursor-pointer hover:text-white transition-colors" onclick="document.getElementById('work').scrollIntoView({behavior: 'smooth'})">
+                Explore <i class="fa-solid fa-arrow-down ml-1"></i>
             </span>
         </div>
     </header>
@@ -116,92 +152,104 @@
     <section id="work" class="py-32 px-4 md:px-12 max-w-[1400px] mx-auto bg-[#f5f5f7]">
         <div class="flex flex-col md:flex-row justify-between items-end mb-24 px-2 reveal-text">
             <div>
-                <div class="inline-block px-3 py-1 rounded-full border border-gray-300 bg-white/50 backdrop-blur-md text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-6">
+                <div class="inline-block px-3 py-1 rounded-full border border-gray-300 bg-white/50 backdrop-blur-md text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-6 shadow-sm">
                     Selected Work
                 </div>
-                <h2 class="text-big font-bold text-gray-900 tracking-tight leading-tight">Crafting Digital<br>Experiences.</h2>
+                <h2 class="text-big font-bold text-gray-900 tracking-tight leading-tight">Visual<br>Intelligence.</h2>
             </div>
             <p class="text-gray-500 max-w-sm mt-6 md:mt-0 text-sm font-medium leading-relaxed">
-                A curation of projects focused on brand identity, automotive design, and visual storytelling.
+                Click any project to view high-fidelity renders.
             </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-32 w-full">
             
-            <div class="group cursor-pointer portfolio-item mt-0">
-                <div class="img-mask aspect-[4/5] relative mb-6">
+            <div class="group portfolio-item mt-0">
+                <div class="img-mask aspect-[4/5] mb-6 shadow-lg transition-shadow duration-500 group-hover:shadow-2xl" onclick="openLightbox(this.querySelector('img').src)">
                     <img 
                         src="https://raw.githubusercontent.com/9119mam/arronportfolio/main/project1.jpg" 
                         onerror="this.src='https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2000&auto=format&fit=crop'"
-                        class="img-reveal w-full h-full object-cover" 
+                        class="img-zoom-scroll w-full h-full object-cover" 
                         loading="lazy"
                         alt="Project 1"
                     >
-                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 pointer-events-none"></div>
+                    <div class="absolute bottom-6 right-6 bg-white/90 backdrop-blur text-black w-10 h-10 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-90 group-hover:scale-100">
+                        <i class="fa-solid fa-expand text-xs"></i>
+                    </div>
                 </div>
-                <div class="flex justify-between items-baseline border-t border-gray-300 pt-5">
+                <div class="flex justify-between items-baseline border-t border-gray-200 pt-5">
                     <div>
-                        <h3 class="text-2xl font-bold tracking-tight">Nike Air Concept</h3>
+                        <h3 class="text-2xl font-bold tracking-tight group-hover:text-[#FF4433] transition-colors duration-300">Nike Air Concept</h3>
                         <span class="text-xs font-semibold text-gray-500 mt-1 block">Brand Identity</span>
                     </div>
                     <span class="text-gray-400 font-mono text-xs border border-gray-200 px-2 py-1 rounded-full">2024</span>
                 </div>
             </div>
 
-            <div class="group cursor-pointer portfolio-item md:mt-32">
-                <div class="img-mask aspect-[4/5] relative mb-6">
+            <div class="group portfolio-item md:mt-32">
+                <div class="img-mask aspect-[4/5] mb-6 shadow-lg transition-shadow duration-500 group-hover:shadow-2xl" onclick="openLightbox(this.querySelector('img').src)">
                     <img 
                         src="https://raw.githubusercontent.com/9119mam/arronportfolio/main/project2.jpg" 
                         onerror="this.src='https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=2000&auto=format&fit=crop'"
-                        class="img-reveal w-full h-full object-cover" 
+                        class="img-zoom-scroll w-full h-full object-cover" 
                         loading="lazy"
                         alt="Project 2"
                     >
-                     <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
+                     <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 pointer-events-none"></div>
+                     <div class="absolute bottom-6 right-6 bg-white/90 backdrop-blur text-black w-10 h-10 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-90 group-hover:scale-100">
+                        <i class="fa-solid fa-expand text-xs"></i>
+                    </div>
                 </div>
-                <div class="flex justify-between items-baseline border-t border-gray-300 pt-5">
+                <div class="flex justify-between items-baseline border-t border-gray-200 pt-5">
                     <div>
-                        <h3 class="text-2xl font-bold tracking-tight">Vision GT</h3>
+                        <h3 class="text-2xl font-bold tracking-tight group-hover:text-[#FF4433] transition-colors duration-300">Vision GT</h3>
                         <span class="text-xs font-semibold text-gray-500 mt-1 block">Automotive</span>
                     </div>
                     <span class="text-gray-400 font-mono text-xs border border-gray-200 px-2 py-1 rounded-full">2023</span>
                 </div>
             </div>
 
-            <div class="group cursor-pointer portfolio-item">
-                <div class="img-mask aspect-[4/5] relative mb-6">
+            <div class="group portfolio-item">
+                <div class="img-mask aspect-[4/5] mb-6 shadow-lg transition-shadow duration-500 group-hover:shadow-2xl" onclick="openLightbox(this.querySelector('img').src)">
                     <img 
                         src="https://raw.githubusercontent.com/9119mam/arronportfolio/main/project3.jpg" 
                         onerror="this.src='https://images.unsplash.com/photo-1552674605-5d28c4a14c24?q=80&w=2000&auto=format&fit=crop'"
-                        class="img-reveal w-full h-full object-cover" 
+                        class="img-zoom-scroll w-full h-full object-cover" 
                         loading="lazy"
                         alt="Project 3"
                     >
-                     <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
+                     <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 pointer-events-none"></div>
+                     <div class="absolute bottom-6 right-6 bg-white/90 backdrop-blur text-black w-10 h-10 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-90 group-hover:scale-100">
+                        <i class="fa-solid fa-expand text-xs"></i>
+                    </div>
                 </div>
-                <div class="flex justify-between items-baseline border-t border-gray-300 pt-5">
+                <div class="flex justify-between items-baseline border-t border-gray-200 pt-5">
                     <div>
-                        <h3 class="text-2xl font-bold tracking-tight">Athletics Campaign</h3>
+                        <h3 class="text-2xl font-bold tracking-tight group-hover:text-[#FF4433] transition-colors duration-300">Athletics Campaign</h3>
                         <span class="text-xs font-semibold text-gray-500 mt-1 block">Photography</span>
                     </div>
                     <span class="text-gray-400 font-mono text-xs border border-gray-200 px-2 py-1 rounded-full">2024</span>
                 </div>
             </div>
 
-            <div class="group cursor-pointer portfolio-item md:mt-32">
-                <div class="img-mask aspect-[4/5] relative mb-6">
+            <div class="group portfolio-item md:mt-32">
+                <div class="img-mask aspect-[4/5] mb-6 shadow-lg transition-shadow duration-500 group-hover:shadow-2xl" onclick="openLightbox(this.querySelector('img').src)">
                     <img 
                         src="https://raw.githubusercontent.com/9119mam/arronportfolio/main/project4.jpg" 
                         onerror="this.src='https://images.unsplash.com/photo-1500917293049-6130a871190c?q=80&w=2000&auto=format&fit=crop'"
-                        class="img-reveal w-full h-full object-cover" 
+                        class="img-zoom-scroll w-full h-full object-cover" 
                         loading="lazy"
                         alt="Project 4"
                     >
-                     <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
+                     <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 pointer-events-none"></div>
+                     <div class="absolute bottom-6 right-6 bg-white/90 backdrop-blur text-black w-10 h-10 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-90 group-hover:scale-100">
+                        <i class="fa-solid fa-expand text-xs"></i>
+                    </div>
                 </div>
-                <div class="flex justify-between items-baseline border-t border-gray-300 pt-5">
+                <div class="flex justify-between items-baseline border-t border-gray-200 pt-5">
                     <div>
-                        <h3 class="text-2xl font-bold tracking-tight">Beauty Editorial</h3>
+                        <h3 class="text-2xl font-bold tracking-tight group-hover:text-[#FF4433] transition-colors duration-300">Beauty Editorial</h3>
                         <span class="text-xs font-semibold text-gray-500 mt-1 block">Art Direction</span>
                     </div>
                     <span class="text-gray-400 font-mono text-xs border border-gray-200 px-2 py-1 rounded-full">2024</span>
@@ -211,19 +259,19 @@
         </div>
     </section>
 
-    <section class="w-full h-[80vh] overflow-hidden relative">
+    <section class="w-full h-[85vh] overflow-hidden relative group cursor-zoom-in" onclick="openLightbox(this.querySelector('img').src)">
         <div class="absolute inset-0" id="parallax-wide-wrapper">
              <img 
                 src="https://raw.githubusercontent.com/9119mam/arronportfolio/main/wide.jpg" 
                 onerror="this.src='https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=2500&auto=format&fit=crop'"
-                class="w-full h-[120%] object-cover object-top will-change-transform scale-110"
+                class="w-full h-[120%] object-cover object-top scale-105 will-change-transform"
                 loading="lazy"
                 id="parallax-wide-img"
                 alt="Wide"
             >
         </div>
         <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <h2 class="text-white text-6xl md:text-8xl font-black tracking-tighter mix-blend-overlay opacity-80">VISION</h2>
+            <h2 class="text-white text-6xl md:text-9xl font-black tracking-tighter mix-blend-overlay opacity-80">VISION</h2>
         </div>
     </section>
 
@@ -233,25 +281,25 @@
                 Process
             </div>
             <h2 class="text-big font-bold tracking-tighter leading-none mb-8">Every Pixel <br>Calculated.</h2>
-            <button class="btn-magnetic border border-gray-200 px-8 py-3 rounded-full text-sm font-semibold hover:bg-black hover:text-white transition-colors duration-500">
-                <i class="fa-solid fa-play text-[#FF4433] mr-2"></i> Play Showreel
+            <button class="btn-magnetic border border-gray-200 px-8 py-3 rounded-full text-sm font-semibold hover:bg-black hover:text-white transition-colors duration-500 group">
+                <i class="fa-solid fa-play text-[#FF4433] mr-2 group-hover:text-white transition-colors"></i> Play Showreel
             </button>
         </div>
 
-        <div class="perspective-1000 h-[600px] flex justify-center items-center relative w-full" id="deck-trigger">
-            <div class="card-3d absolute w-60 h-80 md:w-72 md:h-96 bg-gray-100 rounded-2xl overflow-hidden shadow-2xl" id="c1">
+        <div class="perspective-1200 h-[600px] flex justify-center items-center relative w-full" id="deck-trigger">
+            <div class="card-3d absolute w-60 h-80 md:w-72 md:h-96 bg-gray-100 rounded-2xl overflow-hidden shadow-2xl" id="c1" onclick="openLightbox(this.querySelector('img').src)">
                 <img src="https://raw.githubusercontent.com/9119mam/arronportfolio/main/carousel1.jpg" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600'" class="w-full h-full object-cover opacity-60">
             </div>
-            <div class="card-3d absolute w-60 h-80 md:w-72 md:h-96 bg-gray-100 rounded-2xl overflow-hidden shadow-2xl" id="c2">
+            <div class="card-3d absolute w-60 h-80 md:w-72 md:h-96 bg-gray-100 rounded-2xl overflow-hidden shadow-2xl" id="c2" onclick="openLightbox(this.querySelector('img').src)">
                 <img src="https://raw.githubusercontent.com/9119mam/arronportfolio/main/carousel2.jpg" onerror="this.src='https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=600'" class="w-full h-full object-cover opacity-80">
             </div>
-            <div class="card-3d absolute w-72 h-96 md:w-[350px] md:h-[480px] bg-black rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] z-10" id="c3">
+            <div class="card-3d absolute w-72 h-96 md:w-[350px] md:h-[480px] bg-black rounded-2xl overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.3)] z-10 cursor-zoom-in" id="c3" onclick="openLightbox(this.querySelector('img').src)">
                 <img src="https://raw.githubusercontent.com/9119mam/arronportfolio/main/carousel3.jpg" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800'" class="w-full h-full object-cover">
             </div>
-            <div class="card-3d absolute w-60 h-80 md:w-72 md:h-96 bg-gray-100 rounded-2xl overflow-hidden shadow-2xl" id="c4">
+            <div class="card-3d absolute w-60 h-80 md:w-72 md:h-96 bg-gray-100 rounded-2xl overflow-hidden shadow-2xl" id="c4" onclick="openLightbox(this.querySelector('img').src)">
                  <img src="https://raw.githubusercontent.com/9119mam/arronportfolio/main/carousel4.jpg" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600'" class="w-full h-full object-cover opacity-80">
             </div>
-            <div class="card-3d absolute w-60 h-80 md:w-72 md:h-96 bg-gray-100 rounded-2xl overflow-hidden shadow-2xl" id="c5">
+            <div class="card-3d absolute w-60 h-80 md:w-72 md:h-96 bg-gray-100 rounded-2xl overflow-hidden shadow-2xl" id="c5" onclick="openLightbox(this.querySelector('img').src)">
                  <img src="https://raw.githubusercontent.com/9119mam/arronportfolio/main/carousel5.jpg" onerror="this.src='https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600'" class="w-full h-full object-cover opacity-60">
             </div>
         </div>
@@ -259,17 +307,15 @@
 
     <section id="about" class="bg-gray-50 py-32">
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-            
-            <div class="aspect-[3/4] rounded-[2rem] overflow-hidden relative shadow-2xl img-mask">
+            <div class="aspect-[3/4] rounded-[2rem] overflow-hidden relative shadow-2xl img-mask" onclick="openLightbox(this.querySelector('img').src)">
                 <img 
                     src="https://raw.githubusercontent.com/9119mam/arronportfolio/main/portrait.jpg" 
                     onerror="this.src='https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=2000&auto=format&fit=crop'"
-                    class="img-reveal w-full h-full object-cover"
+                    class="img-zoom-scroll w-full h-full object-cover"
                     loading="lazy"
                     alt="Portrait"
                 >
             </div>
-
             <div class="reveal-text">
                 <h2 class="text-4xl md:text-6xl font-bold mb-8 tracking-tight text-gray-900">Expertise in <br>Digital Design.</h2>
                 <p class="text-gray-500 text-lg leading-relaxed mb-8 font-medium">
@@ -293,10 +339,6 @@
                         <span class="text-xl font-semibold group-hover:translate-x-2 transition-transform duration-500 text-gray-800">Web Design & Strategy</span>
                         <i class="fa-solid fa-arrow-right text-gray-300 -rotate-45 group-hover:rotate-0 group-hover:text-[#FF4433] transition-all duration-300"></i>
                     </div>
-                    <div class="group flex justify-between items-center py-6 border-b border-gray-200 cursor-pointer">
-                        <span class="text-xl font-semibold group-hover:translate-x-2 transition-transform duration-500 text-gray-800">Art Direction</span>
-                        <i class="fa-solid fa-arrow-right text-gray-300 -rotate-45 group-hover:rotate-0 group-hover:text-[#FF4433] transition-all duration-300"></i>
-                    </div>
                 </div>
             </div>
         </div>
@@ -304,19 +346,15 @@
 
     <footer id="contact" class="bg-[#f5f5f7] pt-24 pb-12 border-t border-gray-200">
         <div class="max-w-[1400px] mx-auto px-6">
-            
-            <div class="relative w-full rounded-[2.5rem] h-[500px] overflow-hidden bg-black mb-24 group">
+            <div class="relative w-full rounded-[2.5rem] h-[500px] overflow-hidden bg-black mb-24 group shadow-2xl">
                 <img 
                     src="https://raw.githubusercontent.com/9119mam/arronportfolio/main/footer.jpg" 
                     onerror="this.src='https://images.unsplash.com/photo-1624495209375-73138356c547?q=80&w=2000&auto=format&fit=crop'"
-                    class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform duration-[1.5s]"
+                    class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform duration-[1.5s] ease-[cubic-bezier(0.25,1,0.5,1)]"
                     loading="lazy"
                 >
-                
                 <div class="absolute inset-0 flex flex-col justify-center items-center text-center p-8 text-white z-10">
                     <h2 class="text-4xl md:text-7xl font-bold mb-6 tracking-tight">Stay Connected.</h2>
-                    <p class="text-gray-300 max-w-lg text-lg mb-10">Join the newsletter to receive the latest updates.</p>
-
                     <form onsubmit="event.preventDefault(); alert('Subscribed!');" class="flex flex-col md:flex-row gap-4 w-full md:w-auto">
                         <input type="email" required placeholder="Email Address" class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-full px-8 py-4 text-white placeholder-gray-400 focus:outline-none focus:bg-white/20 w-full md:w-96 transition-all">
                         <button type="submit" class="bg-white text-black font-bold px-10 py-4 rounded-full hover:bg-[#FF4433] hover:text-white transition-all duration-300 btn-magnetic">
@@ -326,27 +364,8 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-12 mb-24 border-b border-gray-200 pb-12">
-                <div>
-                    <h4 class="font-bold mb-6 text-lg">Explore</h4>
-                    <ul class="space-y-3 text-gray-500 font-medium text-sm">
-                        <li><a href="#home" class="hover:text-black transition">Home</a></li>
-                        <li><a href="#about" class="hover:text-black transition">About</a></li>
-                        <li><a href="#work" class="hover:text-black transition">Works</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-6 text-lg">Socials</h4>
-                    <ul class="space-y-3 text-gray-500 font-medium text-sm">
-                        <li><a href="#" class="hover:text-black transition">Twitter</a></li>
-                        <li><a href="#" class="hover:text-black transition">Instagram</a></li>
-                        <li><a href="#" class="hover:text-black transition">LinkedIn</a></li>
-                    </ul>
-                </div>
-            </div>
-
             <div class="flex flex-col items-center">
-                <h1 class="text-huge font-black tracking-tighter leading-none text-black/10 select-none">
+                <h1 class="text-huge font-black tracking-tighter leading-none text-black/5 select-none pointer-events-none">
                     VIPER
                 </h1>
                 <div class="w-full flex justify-between items-center mt-8 text-xs font-bold text-gray-400 uppercase tracking-wider">
@@ -360,17 +379,49 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // 1. HERO ENTRANCE (Smoother, staggered)
-        const heroTl = gsap.timeline({ defaults: { ease: "expo.out" } });
-        
-        heroTl.to("#hero-text", { y: 0, opacity: 1, duration: 2, delay: 0.2 })
-              .to(".reveal-hero-ui", { opacity: 0.8, duration: 1.5, stagger: 0.1 }, "-=1.5")
-              .to("#hero-figure", { opacity: 1, y: "-50%", duration: 1.5 }, "-=1.5");
+        // --- 1. LIGHTBOX SYSTEM (Apple Style) ---
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
 
-        // 2. PARALLAX HERO BG (Zoom out effect)
+        function openLightbox(src) {
+            // Prevent scroll on body
+            document.body.style.overflow = 'hidden';
+            
+            // Set image source
+            lightboxImg.src = src;
+            
+            // Show Container (Fade In)
+            lightbox.classList.remove('pointer-events-none');
+            lightbox.style.opacity = '1';
+            
+            // Animate Image (Scale Up)
+            setTimeout(() => {
+                lightboxImg.style.opacity = '1';
+                lightboxImg.style.transform = 'scale(1)';
+            }, 10);
+        }
+
+        function closeLightbox() {
+            // Animate Out
+            lightbox.style.opacity = '0';
+            lightboxImg.style.transform = 'scale(0.95)';
+            lightboxImg.style.opacity = '0';
+            
+            // Reset after animation
+            setTimeout(() => {
+                lightbox.classList.add('pointer-events-none');
+                document.body.style.overflow = ''; // Restore scroll
+                lightboxImg.src = ''; // Clear src
+            }, 500);
+        }
+
+        // --- 2. SMOOTH SCROLL ANIMATIONS ---
+        
+        // Hero Parallax (Subtle Zoom Out)
         gsap.to("#hero-img", {
-            scale: 1, // Ends at scale 1 (zooms out from 1.1)
-            yPercent: 20, // Parallax movement
+            scale: 1, 
+            yPercent: 15, 
+            ease: "none",
             scrollTrigger: {
                 trigger: "#home",
                 start: "top top",
@@ -379,111 +430,88 @@
             }
         });
 
-        // 3. APPLE-STYLE IMAGE REVEALS (Zoom Out on Scroll)
-        const images = document.querySelectorAll(".img-reveal");
-        
+        // Hero Text Entrance
+        gsap.to("#hero-text", { 
+            y: 0, 
+            opacity: 1, 
+            duration: 1.8, 
+            ease: "expo.out", 
+            delay: 0.2 
+        });
+
+        // Image Parallax (Zoom Inside Mask)
+        const images = document.querySelectorAll(".img-zoom-scroll");
         images.forEach(img => {
             gsap.to(img, {
-                scale: 1, // Zooms out from 1.2 to 1 inside the overflow-hidden container
+                scale: 1, // Zooms out slightly as you scroll down
+                ease: "none",
                 scrollTrigger: {
                     trigger: img.parentElement,
-                    start: "top bottom", // Starts when top of image hits bottom of screen
+                    start: "top bottom",
                     end: "bottom top",
-                    scrub: 1 // Smooth scrubbing
+                    scrub: true
                 }
             });
         });
 
-        // 4. PORTFOLIO ITEM FADE UP
-        gsap.utils.toArray('.portfolio-item').forEach(item => {
-            gsap.fromTo(item, 
-                { y: 100, opacity: 0 },
-                {
-                    y: 0,
-                    opacity: 1,
-                    duration: 1.5,
-                    ease: "power4.out",
-                    scrollTrigger: {
-                        trigger: item,
-                        start: "top 85%"
-                    }
-                }
-            );
+        // Portfolio Reveal (Staggered Fade Up)
+        ScrollTrigger.batch(".portfolio-item", {
+            start: "top 85%",
+            onEnter: batch => gsap.fromTo(batch, 
+                { opacity: 0, y: 60 }, 
+                { opacity: 1, y: 0, stagger: 0.15, duration: 1.2, ease: "power3.out" }
+            )
         });
 
-        // 5. TEXT REVEALS (Standard Fade)
-        gsap.utils.toArray('.reveal-text').forEach(text => {
-            gsap.fromTo(text, 
-                { y: 50, opacity: 0 },
-                {
-                    y: 0,
-                    opacity: 1,
-                    duration: 1.2,
-                    ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: text,
-                        start: "top 80%"
-                    }
-                }
-            );
-        });
-
-        // 6. 3D DECK FAN OUT (Physics feel)
+        // 3D Carousel Physics
         const deckTl = gsap.timeline({
             scrollTrigger: {
                 trigger: "#deck-trigger",
                 start: "top 70%",
-                end: "bottom 30%",
-                scrub: 1
+                end: "bottom 20%",
+                scrub: 1.5 // Adds weight/lag to the scrub
             }
         });
 
         deckTl
-            .to("#c3", { scale: 1 }, 0) // Center
-            .to("#c2", { x: -200, rotationY: 15, z: -50 }, 0)
-            .to("#c4", { x: 200, rotationY: -15, z: -50 }, 0)
-            .to("#c1", { x: -350, rotationY: 25, z: -100, opacity: 0.5 }, 0)
-            .to("#c5", { x: 350, rotationY: -25, z: -100, opacity: 0.5 }, 0);
+            .to("#c3", { scale: 1.05 }, 0)
+            .to("#c2", { x: -220, rotationY: 20, z: -50, opacity: 0.8 }, 0)
+            .to("#c4", { x: 220, rotationY: -20, z: -50, opacity: 0.8 }, 0)
+            .to("#c1", { x: -400, rotationY: 30, z: -100, opacity: 0.5 }, 0)
+            .to("#c5", { x: 400, rotationY: -30, z: -100, opacity: 0.5 }, 0);
 
 
-        // 7. MAGNETIC BUTTON EFFECT
-        const buttons = document.querySelectorAll('.btn-magnetic');
-        
-        buttons.forEach(btn => {
+        // --- 3. UI INTERACTIONS ---
+
+        // Magnetic Buttons
+        document.querySelectorAll('.btn-magnetic').forEach(btn => {
             btn.addEventListener('mousemove', (e) => {
                 const rect = btn.getBoundingClientRect();
                 const x = e.clientX - rect.left - rect.width / 2;
                 const y = e.clientY - rect.top - rect.height / 2;
-                
-                // Move button slightly towards cursor
-                gsap.to(btn, {
-                    x: x * 0.3, 
-                    y: y * 0.3, 
-                    duration: 0.3, 
-                    ease: "power2.out"
-                });
+                btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
             });
-
             btn.addEventListener('mouseleave', () => {
-                // Snap back
-                gsap.to(btn, { x: 0, y: 0, duration: 0.6, ease: "elastic.out(1, 0.5)" });
+                btn.style.transform = 'translate(0px, 0px)';
             });
         });
 
-        // 8. NAVBAR BLUR ON SCROLL
+        // Smart Navbar (Blur on Scroll)
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) {
-                nav.classList.add('glass-nav', 'py-4');
+                nav.classList.add('glass-nav-dark', 'py-4');
                 nav.classList.remove('py-6', 'mix-blend-difference');
-                nav.style.color = "white"; // Force white text on blur bg
+                // Force text color reset when in glass mode
+                nav.style.color = 'white';
             } else {
-                nav.classList.remove('glass-nav', 'py-4');
+                nav.classList.remove('glass-nav-dark', 'py-4');
                 nav.classList.add('py-6', 'mix-blend-difference');
+                nav.style.color = '';
             }
         });
 
-        // Mobile Menu
+        // Mobile Menu Toggle
         function toggleMenu() {
             const menu = document.getElementById('mobile-menu');
             const icon = document.getElementById('menu-icon');
@@ -491,11 +519,13 @@
             if (menu.classList.contains('translate-x-full')) {
                 menu.classList.remove('translate-x-full');
                 icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
+                icon.classList.add('fa-xmark');
+                document.body.style.overflow = 'hidden';
             } else {
                 menu.classList.add('translate-x-full');
-                icon.classList.remove('fa-times');
+                icon.classList.remove('fa-xmark');
                 icon.classList.add('fa-bars');
+                document.body.style.overflow = '';
             }
         }
     </script>
